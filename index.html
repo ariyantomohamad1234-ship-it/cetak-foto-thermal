@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cup Label Printer - Thermal Photo Sticker</title>
+    <!-- Tailwind CSS untuk Desain Antarmuka Modern -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f8fafc;
+        }
+
+        /* Font khusus struk thermal kasir agar terasa autentik */
+        .monospace-thermal {
+            font-family: 'Courier Prime', monospace;
+        }
+
+        /* CSS khusus untuk proses cetak langsung */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #printArea, #printArea * {
+                visibility: visible;
+            }
+            #printArea {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100% !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                box-shadow: none !important;
+            }
+            @page {
+                margin: 0;
+            }
+        }
+    </style>
+</head>
+<body class="text-slate-800 min-h-screen flex flex-col">
+
+    <!-- Header Utama -->
+    <header class="bg-white border-b border-slate-200 py-4 px-6 sticky top-0 z-10 shadow-sm">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="bg-indigo-600 text-white p-2.5 rounded-xl shadow-md shadow-indigo-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-11.314l.707.707m11.314 11.314l.707-.707M4 12a8 8 0 018-8V4M3 12h1m8-8a8 8 0 018 8v1M3 12a9 9 0 009 9h1M12 3a9 9 0 019 9v1" />
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="text-xl font-extrabold tracking-tight text-slate-900">Cup Sticker Creator</h1>
+                    <p class="text-xs text-slate-500">Cetak Foto & Label Minuman Estetik untuk Gelas</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-2">
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 font-bold">
+                    ✨ Auto-Optimization Enabled
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Konten Utama -->
+    <main class="flex-grow max-w-7xl w-full mx-auto p-4 lg:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <!-- Kolom Kiri: Panel Kontrol & Input (Lg: 7) -->
+        <section class="lg:col-span-7 space-y-6">
+            
+            <!-- 1. Input Gambar -->
+            <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+                <h2 class="text-md font-bold mb-4 flex items-center gap-2 text-slate-900">
+                    <span class="bg-indigo-50 text-indigo-600 p-1 rounded-lg">1</span> 
+                    Upload Foto Pelanggan / Logo
+                </h2>
+                
+                <div class="w-full">
+                    <div id="dropzone" class="border-2 border-dashed border-slate-300 hover:border-indigo-500 rounded-xl p-8 transition-all text-center cursor-pointer bg-slate-50 hover:bg-indigo-50/20 group">
+                        <input type="file" id="imageInput" accept="image/*" class="hidden">
+                        <div class="space-y-3" onclick="document.getElementById('imageInput').click()">
+                            <svg class="mx-auto h-12 w-12 text-slate-400 group-hover:text-indigo-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                            <div>
+                                <p class="text-sm font-bold text-slate-700 group-hover:text-indigo-600">Pilih / Ambil Foto Baru</p>
+                                <p class="text-xs text-slate-400 mt-1">Foto otomatis dikonversi ke hitam-putih dither yang tajam secara instan</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Data Pesanan / Label Minuman -->
+            <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+                <h2 class="text-md font-bold mb-4 flex items-center gap-2 text-slate-900">
+                    <span class="bg-indigo-50 text-indigo-600 p-1 rounded-lg">2</span> 
+                    Informasi Pesanan Gelas (Cup Detail)
+                </h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1.5">Nomor Antrean</label>
+                        <input type="text" id="orderNo" value="#042" class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all font-bold placeholder-slate-400">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1.5">Nama Pelanggan</label>
+                        <input type="text" id="custName" value="Kak Ariyanto" class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all placeholder-slate-400">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1.5">Nama Minuman</label>
+                        <input type="text" id="drinkName" value="Salted Caramel Boba Milk" class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all placeholder-slate-400 font-medium">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 mb-1.5">Kustomisasi / Catatan</label>
+                        <input type="text" id="drinkNote" value="Less Ice, Normal Sugar" class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all placeholder-slate-400 text-slate-600">
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-xs font-semibold text-slate-600 mb-1.5">Nama Kafe / Brand Anda</label>
+                        <input type="text" id="brandName" value="DAILY COFFEE & CO." class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all placeholder-slate-400 tracking-wider uppercase font-bold">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. Konfigurasi Printer -->
+            <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+                <h2 class="text-md font-bold mb-4 flex items-center gap-2 text-slate-900">
+                    <span class="bg-indigo-50 text-indigo-600 p-1 rounded-lg">3</span> 
+                    Ukuran Printer Struk Anda
+                </h2>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <label class="border-2 border-indigo-600 bg-indigo-50/30 rounded-xl p-4 flex flex-col justify-between cursor-pointer relative transition-all" id="labelPaper58">
+                        <input type="radio" name="paperWidth" value="58" checked class="absolute right-4 top-4 accent-indigo-600">
+                        <span class="text-sm font-bold text-slate-900 block">Lebar 58 mm</span>
+                        <span class="text-xs text-slate-500 mt-1">Printer Bluetooth Mini, Portable, Struk Kasir Kecil (~384px)</span>
+                    </label>
+
+                    <label class="border border-slate-200 hover:border-slate-300 rounded-xl p-4 flex flex-col justify-between cursor-pointer relative transition-all" id="labelPaper80">
+                        <input type="radio" name="paperWidth" value="80" class="absolute right-4 top-4 accent-indigo-600">
+                        <span class="text-sm font-bold text-slate-900 block">Lebar 80 mm</span>
+                        <span class="text-xs text-slate-500 mt-1">Printer Kasir Besar / Standar EPSON, STAR (~576px)</span>
+                    </label>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Kolom Kanan: Pratinjau Realistis & Tombol Print (Lg: 5) -->
+        <section class="lg:col-span-5 flex flex-col">
+            <div class="bg-slate-900 rounded-3xl p-6 lg:p-8 flex-grow flex flex-col justify-between text-white shadow-xl sticky top-28">
+                <div>
+                    <span class="text-xs font-bold uppercase tracking-wider text-indigo-400">Live Preview</span>
+                    <h2 class="text-lg font-extrabold mt-1 mb-6 text-white">Pratinjau Stiker Gelas</h2>
+                    
+                    <!-- Wadah Simulasi Kertas Struk / Label -->
+                    <div class="flex justify-center mb-6">
+                        <div class="bg-white text-slate-900 p-4 shadow-2xl transition-all duration-300 overflow-hidden" id="printArea" style="width: 240px;">
+                            <!-- Canvas Render Utama -->
+                            <canvas id="targetCanvas" class="w-full h-auto image-render-pixelated block" style="image-rendering: pixelated;"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bagian Tombol Aksi -->
+                <div class="space-y-3">
+                    <button id="btnPrint" class="w-full bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white font-bold py-4 px-6 rounded-2xl shadow-lg shadow-indigo-900/30 transition-all flex items-center justify-center gap-3 text-base">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M5 4v3H4a2 2 0 00-2 2v3a2 2 0 002 2h1v2a2 2 0 002 2h6a2 2 0 002-2v-2h1a2 2 0 002-2V9a2 2 0 00-2-2h-1V4a2 2 0 00-2-2H7a2 2 0 00-2 2zm8 0H7v3h6V4zm0 8H7v4h6v-4z" clip-rule="evenodd" />
+                        </svg>
+                        Cetak Stiker Sekarang
+                    </button>
+                    <p class="text-[11px] text-center text-slate-400">
+                        *Pastikan margin diset ke <strong>"None"</strong> & centang <strong>"Headers/Footers"</strong> dihilangkan pada menu cetak browser Anda.
+                    </p>
+                </div>
+            </div>
+        </section>
+        
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-6 mt-12 text-center text-xs text-slate-500">
+        <div class="max-w-7xl mx-auto px-6">
+            <p>© 2026 Daily Cup Sticker Thermal Printer Companion. Dioptimalkan untuk Kertas Label Thermal.</p>
+        </div>
+    </footer>
+
+    <!-- LOGIK PEMROSESAN GAMBAR (JAVASCRIPT) -->
+    <script>
+        // Ambil elemen HTML
+        const imageInput = document.getElementById('imageInput');
+        const targetCanvas = document.getElementById('targetCanvas');
+        const ctx = targetCanvas.getContext('2d');
+        const btnPrint = document.getElementById('btnPrint');
+        
+        // Element Input Data Minuman
+        const orderNo = document.getElementById('orderNo');
+        const custName = document.getElementById('custName');
+        const drinkName = document.getElementById('drinkName');
+        const drinkNote = document.getElementById('drinkNote');
+        const brandName = document.getElementById('brandName');
+        
+        // Elemen Printer Setup
+        const radioWidths = document.getElementsByName('paperWidth');
+        const label58 = document.getElementById('labelPaper58');
+        const label80 = document.getElementById('labelPaper80');
+        const printArea = document.getElementById('printArea');
+
+        let userPhoto = null; // Menyimpan objek gambar asli yang diunggah
+
+        // Inisialisasi default saat aplikasi dibuka
+        window.addEventListener('DOMContentLoaded', () => {
+            loadDefaultImage();
+            setupEventListeners();
+        });
+
+        // Load gambar placeholder bawaan agar pratinjau tidak kosong
+        function loadDefaultImage() {
+            userPhoto = new Image();
+            userPhoto.crossOrigin = "anonymous";
+            // Menggunakan gambar default yang estetik & kontras tinggi
+            userPhoto.src = "https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&q=80&w=300";
+            userPhoto.onload = () => {
+                renderStickerLabel();
+            };
+        }
+
+        function setupEventListeners() {
+            // Upload File
+            imageInput.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    userPhoto = new Image();
+                    userPhoto.onload = () => {
+                        renderStickerLabel();
+                    };
+                    userPhoto.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+
+            // Perubahan Input Teks real-time
+            [orderNo, custName, drinkName, drinkNote, brandName].forEach(input => {
+                input.addEventListener('input', renderStickerLabel);
+            });
+
+            // Event pergantian lebar kertas printer
+            radioWidths.forEach(radio => {
+                radio.addEventListener('change', (e) => {
+                    const value = e.target.value;
+                    if (value === '58') {
+                        label58.className = "border-2 border-indigo-600 bg-indigo-50/30 rounded-xl p-4 flex flex-col justify-between cursor-pointer relative transition-all";
+                        label80.className = "border border-slate-200 hover:border-slate-300 rounded-xl p-4 flex flex-col justify-between cursor-pointer relative transition-all";
+                        printArea.style.width = "240px"; // Lebar visual di layar (simulasi 58mm)
+                    } else {
+                        label80.className = "border-2 border-indigo-600 bg-indigo-50/30 rounded-xl p-4 flex flex-col justify-between cursor-pointer relative transition-all";
+                        label58.className = "border border-slate-200 hover:border-slate-300 rounded-xl p-4 flex flex-col justify-between cursor-pointer relative transition-all";
+                        printArea.style.width = "340px"; // Lebar visual di layar (simulasi 80mm)
+                    }
+                    renderStickerLabel();
+                });
+            });
+
+            // Tombol Cetak
+            btnPrint.addEventListener('click', () => {
+                window.print();
+            });
+        }
+
+        // FUNGSI UTAMA: Menggambar Seluruh Stiker di Canvas (Teks + Gambar Ter-Dithering)
+        function renderStickerLabel() {
+            // Tentukan lebar pixel berdasarkan pilihan kertas
+            let activeWidth = 58;
+            radioWidths.forEach(r => { if (r.checked) activeWidth = parseInt(r.value); });
+            
+            // Printer 58mm biasanya memiliki area cetak efektif ~384px
+            // Printer 80mm memiliki area cetak efektif ~576px
+            const targetWidth = activeWidth === 58 ? 384 : 576;
+            
+            // Tentukan rasio penskalaan agar teks tetap tajam
+            const scaleFactor = targetWidth / 384; 
+            
+            // Estimasi Tinggi Canvas dinamis
+            const topHeaderHeight = 90 * scaleFactor;
+            const photoFrameHeight = 280 * scaleFactor; // Wadah foto
+            const orderDetailHeight = 160 * scaleFactor;
+            const totalHeight = topHeaderHeight + photoFrameHeight + orderDetailHeight;
+
+            targetCanvas.width = targetWidth;
+            targetCanvas.height = totalHeight;
+
+            // Background Putih Bersih
+            ctx.fillStyle = '#FFFFFF';
+            ctx.fillRect(0, 0, targetWidth, totalHeight);
+
+            // ============================================
+            // BAGIAN 1: HEADER BRAND & GARIS PEMBATAS
+            // ============================================
+            ctx.fillStyle = '#000000';
+            ctx.textAlign = 'center';
+            
+            // Nama Kafe (Brand)
+            ctx.font = `bold ${Math.round(20 * scaleFactor)}px 'Courier Prime', Courier, monospace`;
+            ctx.fillText(brandName.value.toUpperCase(), targetWidth / 2, 35 * scaleFactor);
+            
+            // Tagline / Alamat web kecil
+            ctx.font = `${Math.round(11 * scaleFactor)}px 'Courier Prime', Courier, monospace`;
+            ctx.fillText("+++ STICKER PESANAN GELAS +++", targetWidth / 2, 55 * scaleFactor);
+
+            // Garis Gunting Bermotif Kasir Klasik
+            drawDashedLine(0, 70 * scaleFactor, targetWidth, 70 * scaleFactor, 6 * scaleFactor);
+
+            // ============================================
+            // BAGIAN 2: INFO NOMOR ANTREAN & NAMA
+            // ============================================
+            ctx.textAlign = 'left';
+            
+            // Nomor Antrean (Besar di sisi kanan)
+            ctx.font = `bold ${Math.round(36 * scaleFactor)}px 'Courier Prime', Courier, monospace`;
+            ctx.fillText(orderNo.value, targetWidth - (150 * scaleFactor), 125 * scaleFactor);
+
+            // Detail Nama Pelanggan
+            ctx.font = `bold ${Math.round(15 * scaleFactor)}px 'Courier Prime', Courier, monospace`;
+            ctx.fillText("NAMA:", 20 * scaleFactor, 105 * scaleFactor);
+            ctx.font = `bold ${Math.round(20 * scaleFactor)}px 'Courier Prime', Courier, monospace`;
+            ctx.fillText(custName.value, 20 * scaleFactor, 128 * scaleFactor);
+
+            // Garis pembatas tipis
+            drawSolidLine(20 * scaleFactor, 145 * scaleFactor, targetWidth - (20 * scaleFactor), 145 * scaleFactor);
+
+            // ============================================
+            // BAGIAN 3: FOTO TER-DITHERING (HITAM PUTIH RETRO)
+            // ============================================
+            if (userPhoto) {
+                // Gambar bingkai Polaroid
+                const pWidth = targetWidth - (60 * scaleFactor);
+                const pHeight = 210 * scaleFactor;
+                const px = 30 * scaleFactor;
+                const py = 160 * scaleFactor;
+
+                // Hitam border frame tipis untuk estetika polaroid
+                ctx.strokeStyle = '#000000';
+                ctx.lineWidth = 2 * scaleFactor;
+                ctx.strokeRect(px, py, pWidth, pHeight);
+
+                // Hitung posisi foto di dalam frame agar tidak penyet (Aspect Ratio Fit)
+                const imgInnerWidth = pWidth - (16 * scaleFactor);
+                const imgInnerHeight = pHeight - (16 * scaleFactor);
+                const imgX = px + (8 * scaleFactor);
+                const imgY = py + (8 * scaleFactor);
+
+                const imageRatio = userPhoto.width / userPhoto.height;
+                const frameRatio = imgInnerWidth / imgInnerHeight;
+                
+                let sourceX = 0, sourceY = 0, sourceWidth = userPhoto.width, sourceHeight = userPhoto.height;
+                
+                if (imageRatio > frameRatio) {
+                    // Gambar terlalu lebar
+                    sourceWidth = userPhoto.height * frameRatio;
+                    sourceX = (userPhoto.width - sourceWidth) / 2;
+                } else {
+                    // Gambar terlalu tinggi
+                    sourceHeight = userPhoto.width / frameRatio;
+                    sourceY = (userPhoto.height - sourceHeight) / 2;
+                }
+
+                // Buat canvas sementara (offscreen) khusus untuk memproses dithering foto
+                const offCanvas = document.createElement('canvas');
+                offCanvas.width = imgInnerWidth;
+                offCanvas.height = imgInnerHeight;
+                const offCtx = offCanvas.getContext('2d');
+
+                // Terapkan penyesuaian kontras & kecerahan otomatis yang "paten"
+                // Kontras diset ke 1.5 & Brightness diset ke 1.05 agar hitam pekat dan putih bersih seimbang
+                const contrastValue = 1.5;
+                const brightnessValue = 1.05;
+                offCtx.filter = `contrast(${contrastValue}) brightness(${brightnessValue}) grayscale(100%)`;
+                
+                // Gambar foto ke canvas sementara
+                offCtx.drawImage(
+                    userPhoto, 
+                    sourceX, sourceY, sourceWidth, sourceHeight, 
+                    0, 0, imgInnerWidth, imgInnerHeight
+                );
+
+                // Dapatkan pixel data dari foto untuk menerapkan efek bintik-bintik struk kasir (dither)
+                const imgData = offCtx.getImageData(0, 0, imgInnerWidth, imgInnerHeight);
+                applyDitherAlgorithm(imgData, 'atkinson'); // Dipatenkan menggunakan Atkinson dither
+                offCtx.putImageData(imgData, 0, 0);
+
+                // Salin hasil foto yang sudah dither ke canvas utama
+                ctx.drawImage(offCanvas, imgX, imgY);
+            }
+
+            // ============================================
+            // BAGIAN 4: DETAIL MINUMAN & CATATAN
+            // ============================================
+            const textYStart = 395 * scaleFactor;
+            
+            // Nama Produk / Minuman
+            ctx.fillStyle = '#000000';
+            ctx.font = `bold ${Math.round(18 * scaleFactor)}px 'Courier Prime', Courier, monospace`;
+            ctx.fillText(drinkName.value.toUpperCase(), 20 * scaleFactor, textYStart);
+
+            // Kustomisasi/Catatan Minuman (Lebih kecil)
+            ctx.font = `${Math.round(13 * scaleFactor)}px 'Courier Prime', Courier, monospace`;
+            ctx.fillText("RESEP: " + drinkNote.value, 20 * scaleFactor, textYStart + (25 * scaleFactor));
+
+            // Footer Estetik / Terima Kasih
+            ctx.textAlign = 'center';
+            ctx.font = `italic ${Math.round(11 * scaleFactor)}px 'Courier Prime', Courier, monospace`;
+            ctx.fillText("Terima kasih atas kunjungan Anda!", targetWidth / 2, textYStart + (65 * scaleFactor));
+            ctx.font = `${Math.round(9 * scaleFactor)}px 'Courier Prime', Courier, monospace`;
+            ctx.fillText("Harap tempelkan stiker ini di luar permukaan gelas kering", targetWidth / 2, textYStart + (80 * scaleFactor));
+
+            // Garis Potong Bawah
+            drawDashedLine(0, totalHeight - (10 * scaleFactor), targetWidth, totalHeight - (10 * scaleFactor), 6 * scaleFactor);
+        }
+
+        // ========================================================
+        // ALGORITMA DITHERING (PEMROSES GAMBAR RETRO HITAM PUTIH)
+        // ========================================================
+        function applyDitherAlgorithm(imgData, type) {
+            const data = imgData.data;
+            const w = imgData.width;
+            const h = imgData.height;
+
+            if (type === 'threshold') {
+                // High Contrast murni hitam dan putih tanpa sebaran error
+                for (let i = 0; i < data.length; i += 4) {
+                    const gray = 0.299 * data[i] + 0.587 * data[i+1] + 0.114 * data[i+2];
+                    const val = gray < 120 ? 0 : 255;
+                    data[i] = data[i+1] = data[i+2] = val;
+                }
+                return;
+            }
+
+            // Mempersiapkan array luminance 1D untuk manipulasi dither
+            const grayBuf = new Float32Array(w * h);
+            for (let i = 0; i < data.length; i += 4) {
+                grayBuf[i / 4] = 0.299 * data[i] + 0.587 * data[i+1] + 0.114 * data[i+2];
+            }
+
+            for (let y = 0; y < h; y++) {
+                for (let x = 0; x < w; x++) {
+                    const idx = y * w + x;
+                    const oldGray = grayBuf[idx];
+                    const newGray = oldGray < 128 ? 0 : 255;
+                    const error = oldGray - newGray;
+
+                    grayBuf[idx] = newGray;
+
+                    // Distribusi error berdasarkan tipe algoritma yang dipilih
+                    if (type === 'floyd') {
+                        // Floyd-Steinberg
+                        distributeError(grayBuf, x + 1, y, w, h, error * (7 / 16));
+                        distributeError(grayBuf, x - 1, y + 1, w, h, error * (3 / 16));
+                        distributeError(grayBuf, x,     y + 1, w, h, error * (5 / 16));
+                        distributeError(grayBuf, x + 1, y + 1, w, h, error * (1 / 16));
+                    } else if (type === 'atkinson') {
+                        // Atkinson (Menghasilkan kontras yang tajam dan bersih pada printer thermal)
+                        distributeError(grayBuf, x + 1, y, w, h, error * (1 / 8));
+                        distributeError(grayBuf, x + 2, y, w, h, error * (1 / 8));
+                        distributeError(grayBuf, x - 1, y + 1, w, h, error * (1 / 8));
+                        distributeError(grayBuf, x,     y + 1, w, h, error * (1 / 8));
+                        distributeError(grayBuf, x + 1, y + 1, w, h, error * (1 / 8));
+                        distributeError(grayBuf, x,     y + 2, w, h, error * (1 / 8));
+                    }
+                }
+            }
+
+            // Tulis kembali buffer abu-abu yang telah difilter ke format warna RGBA canvas
+            for (let i = 0; i < grayBuf.length; i++) {
+                const val = grayBuf[i];
+                const rIdx = i * 4;
+                data[rIdx] = data[rIdx+1] = data[rIdx+2] = val;
+                data[rIdx+3] = 255; // Solid Alpha
+            }
+        }
+
+        function distributeError(buf, x, y, w, h, err) {
+            if (x < 0 || x >= w || y < 0 || y >= h) return;
+            buf[y * w + x] += err;
+        }
+
+        // ============================================
+        // HELPER DRAWING FUNCTIONS (LINE MAKER)
+        // ============================================
+        function drawDashedLine(x1, y1, x2, y2, strokeSize) {
+            ctx.strokeStyle = '#000000';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([strokeSize, strokeSize]);
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+            ctx.setLineDash([]); // Reset default solid line
+        }
+
+        function drawSolidLine(x1, y1, x2, y2) {
+            ctx.strokeStyle = '#000000';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+        }
+    </script>
+</body>
+</html>
