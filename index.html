@@ -990,9 +990,11 @@
             // Hitung Tinggi Canvas Total secara dinamis agar presisi dan tidak tumpang tindih
             const py = 180; 
             const qby = py + pHeight + 20; 
-            const textYStart = qby + quoteFrameHeight + 35; 
-            const barcodeYStart = textYStart + 55; 
-            const totalHeight = barcodeYStart + 90; // Diperpanjang sedikit untuk menyeimbangkan footer
+            
+            // Memberikan ruang vertikal ekstra di bagian bawah agar tulisan yang besar & tebal tidak menumpuk
+            const textYStart = qby + quoteFrameHeight + 40; 
+            const barcodeYStart = textYStart + 60; 
+            const totalHeight = barcodeYStart + 105; 
 
             targetCanvas.width = targetWidth;
             targetCanvas.height = totalHeight;
@@ -1126,37 +1128,39 @@
             // Gambar teks quotes rapi di tengah bingkai
             wrapText(ctx, `"${quoteText}"`, targetWidth / 2, qby + 28, pWidth - 28, 18);
 
-            // ============================================
-            // BAGIAN 5: DETAIL MINUMAN & CATATAN (BESAR & SANGAT TEBAL)
-            // ============================================
+            // ====================================================================
+            // BAGIAN 5: DETAIL MINUMAN & CATATAN (DIPERBESAR & ULTRA TEBAL)
+            // ====================================================================
             ctx.textAlign = 'left';
             
-            // Nama Produk / Minuman (Super Bold)
+            // Nama Produk / Minuman (Diperbesar dari 22px menjadi 24px dan Sangat Tebal)
             ctx.fillStyle = '#000000';
-            ctx.font = "bold 22px 'Courier Prime', Courier, monospace";
+            ctx.font = "bold 24px 'Courier Prime', Courier, monospace";
             ctx.fillText(drinkName.value.toUpperCase(), contentX, textYStart);
 
-            // Kustomisasi/Catatan Minuman (Sangat Bold)
-            ctx.font = "bold 14px 'Courier Prime', Courier, monospace";
-            ctx.fillText("RECIPE: " + drinkNote.value, contentX, textYStart + 25);
+            // Kustomisasi/Catatan Resep Minuman (Diperbesar dari 14px menjadi 16px, Kapital & Sangat Tebal)
+            ctx.font = "bold 16px 'Courier Prime', Courier, monospace";
+            ctx.fillText("RECIPE: " + drinkNote.value.toUpperCase(), contentX, textYStart + 28);
 
-            // ===================================================
-            // BAGIAN 6: BARCODE MINIMALIS ESTETIK (KOREAN VIBE)
-            // ===================================================
+            // ====================================================================
+            // BAGIAN 6: BARCODE MINIMALIS ESTETIK & FOOTER (DIPERBESAR & ULTRA TEBAL)
+            // ====================================================================
             const barcodeWidth = baseContentWidth - 40;
             const barcodeX = (targetWidth - barcodeWidth) / 2;
             
-            // Gambar Barcode di tengah-tengah
-            drawAestheticBarcode(ctx, barcodeX, barcodeYStart, barcodeWidth, 20);
+            // Gambar Barcode di tengah-tengah (Tinggi barcode dipertebal sedikit dari 20 ke 22)
+            drawAestheticBarcode(ctx, barcodeX, barcodeYStart, barcodeWidth, 22);
 
-            // Footer Estetik / Terima Kasih (Bold)
+            // Footer Terima Kasih (Kapital, Diperbesar dari 13px menjadi 15px dan Ultra Tebal)
             ctx.textAlign = 'center';
-            ctx.font = "italic bold 13px 'Courier Prime', Courier, monospace";
-            ctx.fillText("Terima kasih atas kunjungan Anda!", targetWidth / 2, barcodeYStart + 43);
-            ctx.font = "bold 11px 'Courier Prime', Courier, monospace";
-            ctx.fillText("Harap tempelkan stiker ini di luar permukaan gelas kering", targetWidth / 2, barcodeYStart + 58);
+            ctx.font = "bold italic 15px 'Courier Prime', Courier, monospace";
+            ctx.fillText("TERIMA KASIH ATAS KUNJUNGAN ANDA!", targetWidth / 2, barcodeYStart + 48);
+            
+            // Keterangan Cara Tempel (Kapital, Diperbesar dari 11px menjadi 12px dan Ultra Tebal)
+            ctx.font = "bold 12px 'Courier Prime', Courier, monospace";
+            ctx.fillText("HARAP TEMPELKAN STIKER INI DI PERMUKAAN GELAS KERING", targetWidth / 2, barcodeYStart + 66);
 
-            // Garis Potong Bawah (Lebih Tebal)
+            // Garis Potong Bawah (Sangat Tebal)
             drawDashedLine(0, totalHeight - 12, targetWidth, totalHeight - 12, 6);
         }
 
