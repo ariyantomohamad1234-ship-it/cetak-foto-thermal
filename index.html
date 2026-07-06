@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cup Label Printer - Thermal Photo Sticker</title>
+    <title>Cup Label Printer - Thermal Photo Sticker HD</title>
     <!-- Tailwind CSS untuk Desain Antarmuka Modern -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -67,14 +67,14 @@
                     </svg>
                 </div>
                 <div>
-                    <h1 class="text-xl font-extrabold tracking-tight text-slate-900">Cup Sticker Creator</h1>
-                    <p class="text-xs text-slate-500">Cetak Foto & Label Minuman Estetik untuk Gelas (Tulisan Tebal & HD)</p>
+                    <h1 class="text-xl font-extrabold tracking-tight text-slate-900">Cup Sticker Creator HD</h1>
+                    <p class="text-xs text-slate-500">Cetak Foto Jelas & Label Minuman Estetik untuk Gelas (Tulisan Tebal & Tajam)</p>
                 </div>
             </div>
             
             <div class="flex items-center gap-2">
                 <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 shadow-sm border border-emerald-200">
-                    📸 Standardized Bold Sticker Active
+                    ✨ Ultra HD Thermal Mode Active
                 </span>
             </div>
         </div>
@@ -114,7 +114,7 @@
                                 </svg>
                                 <div>
                                     <p class="text-sm font-bold text-slate-700 group-hover:text-indigo-600">Pilih / Seret File Foto</p>
-                                    <p class="text-xs text-slate-400 mt-1">Sistem otomatis menajamkan gambar agar cetakan tajam</p>
+                                    <p class="text-xs text-slate-400 mt-1">Sistem otomatis menajamkan gambar agar cetakan sangat jelas</p>
                                 </div>
                             </div>
                         </div>
@@ -216,18 +216,34 @@
                 <!-- Fitur Penyesuaian Cahaya & Kontras Gambar dengan Input Manual Dinamis -->
                 <div class="border-t border-slate-100 pt-5 space-y-5">
                     <div class="flex items-center justify-between">
-                        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500">Penyesuaian Gambar Thermal (Kontrol Presisi)</h3>
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500">Penyunting Gambar Thermal HD (Pencegah Gambar Buram)</h3>
                         <button id="btnResetAdjust" type="button" class="text-xs font-bold text-indigo-600 hover:text-indigo-500 transition-colors">
-                            🔄 Reset Penyesuaian
+                            🔄 Reset Semua Setelan
                         </button>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Tombol Presets Populer -->
+                    <div class="space-y-1.5">
+                        <span class="block text-xs font-semibold text-slate-500">Preset Cetak Cepat:</span>
+                        <div class="flex flex-wrap gap-2">
+                            <button id="presetSelfie" type="button" class="px-3 py-1.5 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-slate-700 text-xs font-bold rounded-lg border border-slate-200 transition-all">
+                                👩 Selfie / Wajah (Detail HD)
+                            </button>
+                            <button id="presetObject" type="button" class="px-3 py-1.5 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-slate-700 text-xs font-bold rounded-lg border border-slate-200 transition-all">
+                                ☕ Pemandangan / Benda
+                            </button>
+                            <button id="presetTextLogo" type="button" class="px-3 py-1.5 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 text-slate-700 text-xs font-bold rounded-lg border border-slate-200 transition-all">
+                                📝 Logo / Tulisan / Siluet
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5 pt-2">
                         <!-- KONTROL MANUAL KECERAHAN (BRIGHTNESS) -->
                         <div class="space-y-2">
                             <div class="flex justify-between items-center text-xs font-bold text-slate-700">
-                                <label for="brightnessSlider">🔆 Terang / Gelap Gambar</label>
-                                <div class="flex items-center gap-1.5">
+                                <label for="brightnessSlider">🔆 Kecerahan (Terang / Gelap)</label>
+                                <div class="flex items-center gap-1">
                                     <input type="number" id="brightnessInput" min="0.2" max="2.5" step="0.05" value="1.05" class="w-16 text-center border border-slate-200 rounded-md py-0.5 px-1 focus:outline-none focus:ring-1 focus:ring-indigo-500 font-bold text-slate-800">
                                     <span class="text-slate-400">x</span>
                                 </div>
@@ -243,7 +259,7 @@
                         <div class="space-y-2">
                             <div class="flex justify-between items-center text-xs font-bold text-slate-700">
                                 <label for="contrastSlider">🌗 Kontras (Kepekatan Hitam)</label>
-                                <div class="flex items-center gap-1.5">
+                                <div class="flex items-center gap-1">
                                     <input type="number" id="contrastInput" min="0.5" max="4.0" step="0.1" value="1.6" class="w-16 text-center border border-slate-200 rounded-md py-0.5 px-1 focus:outline-none focus:ring-1 focus:ring-indigo-500 font-bold text-slate-800">
                                     <span class="text-slate-400">x</span>
                                 </div>
@@ -253,6 +269,32 @@
                                 <input type="range" id="contrastSlider" min="0.5" max="4.0" step="0.1" value="1.6" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
                                 <span class="text-[10px] text-slate-400 font-semibold">TAJAM</span>
                             </div>
+                        </div>
+
+                        <!-- KONTROL MANUAL KETAJAMAN TEPI (SHARPENING) -->
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center text-xs font-bold text-slate-700">
+                                <label for="sharpenSlider">🎯 Ketajaman Garis (Fokus)</label>
+                                <div class="flex items-center gap-1">
+                                    <input type="number" id="sharpenInput" min="0.0" max="4.0" step="0.1" value="1.8" class="w-16 text-center border border-slate-200 rounded-md py-0.5 px-1 focus:outline-none focus:ring-1 focus:ring-indigo-500 font-bold text-slate-800">
+                                    <span class="text-slate-400">x</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="text-[10px] text-slate-400 font-semibold">HALUS</span>
+                                <input type="range" id="sharpenSlider" min="0.0" max="4.0" step="0.1" value="1.8" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
+                                <span class="text-[10px] text-slate-400 font-semibold">SANGAT TAJAM</span>
+                            </div>
+                        </div>
+
+                        <!-- KONTROL METODE ALGORITMA DITHERING -->
+                        <div class="space-y-2">
+                            <label for="ditherModeSelect" class="block text-xs font-bold text-slate-700">🏁 Algoritma Gambar Thermal</label>
+                            <select id="ditherModeSelect" class="w-full border border-slate-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all font-bold bg-slate-50">
+                                <option value="floyd">Detail HD (Floyd-Steinberg) - Cocok Wajah / Orang</option>
+                                <option value="atkinson">Retro Dot (Atkinson) - Sangat Artistik</option>
+                                <option value="threshold">Hitam Putih Pekat (Threshold) - Cocok Tulisan / Logo</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -455,12 +497,20 @@
         const btnCloseCamera = document.getElementById('btnCloseCamera');
         const cameraStatus = document.getElementById('cameraStatus');
 
-        // Elemen Pengatur Kecerahan dan Kontras Gambar
+        // Elemen Pengatur Kecerahan, Kontras, Ketajaman dan Mode Dither
         const brightnessSlider = document.getElementById('brightnessSlider');
         const brightnessInput = document.getElementById('brightnessInput');
         const contrastSlider = document.getElementById('contrastSlider');
         const contrastInput = document.getElementById('contrastInput');
+        const sharpenSlider = document.getElementById('sharpenSlider');
+        const sharpenInput = document.getElementById('sharpenInput');
+        const ditherModeSelect = document.getElementById('ditherModeSelect');
         const btnResetAdjust = document.getElementById('btnResetAdjust');
+
+        // Tombol Presets
+        const presetSelfie = document.getElementById('presetSelfie');
+        const presetObject = document.getElementById('presetObject');
+        const presetTextLogo = document.getElementById('presetTextLogo');
 
         let userPhoto = null; // Menyimpan objek gambar asli yang diunggah
         let localStream = null; // Menyimpan stream kamera aktif
@@ -602,7 +652,6 @@
 
             // Logik Pengacak Quotes Otomatis (Mengacak dari Total 100 Quotes)
             btnRandomizeQuote.addEventListener('click', () => {
-                // Kumpulkan semua quotes dari seluruh kategori ke dalam 1 array datar
                 const allQuotes = [];
                 for (const quotes of Object.values(QUOTES_POOL)) {
                     allQuotes.push(...quotes);
@@ -611,7 +660,6 @@
                 const randomIndex = Math.floor(Math.random() * allQuotes.length);
                 const selectedQuote = allQuotes[randomIndex];
 
-                // Cari dan pilih quote di dropdown
                 let foundInDropdown = false;
                 for (let i = 0; i < quoteSelect.options.length; i++) {
                     if (quoteSelect.options[i].value === selectedQuote) {
@@ -621,7 +669,6 @@
                     }
                 }
 
-                // Jika custom
                 if (!foundInDropdown) {
                     quoteSelect.value = 'custom';
                     customQuoteContainer.classList.remove('hidden');
@@ -630,7 +677,6 @@
                     customQuoteContainer.classList.add('hidden');
                 }
 
-                // Render ulang stiker
                 renderStickerLabel();
             });
 
@@ -688,12 +734,69 @@
                 renderStickerLabel();
             });
 
+            // Ketajaman (Sharpening)
+            sharpenSlider.addEventListener('input', (e) => {
+                sharpenInput.value = e.target.value;
+                renderStickerLabel();
+            });
+            sharpenInput.addEventListener('input', (e) => {
+                let val = parseFloat(e.target.value);
+                if (isNaN(val)) val = 1.8;
+                if (val < 0.0) val = 0.0;
+                if (val > 4.0) val = 4.0;
+                sharpenSlider.value = val;
+                renderStickerLabel();
+            });
+
+            // Mode Algoritma Dithering
+            ditherModeSelect.addEventListener('change', renderStickerLabel);
+
+            // -- LOGIK PRESET CETAK CEPAT --
+            presetSelfie.addEventListener('click', () => {
+                // Preset Optimal untuk wajah orang
+                brightnessSlider.value = "1.15";
+                brightnessInput.value = "1.15";
+                contrastSlider.value = "1.4";
+                contrastInput.value = "1.4";
+                sharpenSlider.value = "2.0";
+                sharpenInput.value = "2.0";
+                ditherModeSelect.value = "floyd"; // Floyd-Steinberg is superior for faces
+                renderStickerLabel();
+            });
+
+            presetObject.addEventListener('click', () => {
+                // Preset seimbang untuk benda / makanan / gelas
+                brightnessSlider.value = "1.00";
+                brightnessInput.value = "1.00";
+                contrastSlider.value = "1.8";
+                contrastInput.value = "1.8";
+                sharpenSlider.value = "2.5";
+                sharpenInput.value = "2.5";
+                ditherModeSelect.value = "atkinson"; // Atkinson gives a strong aesthetic dot contrast
+                renderStickerLabel();
+            });
+
+            presetTextLogo.addEventListener('click', () => {
+                // Preset kontras tinggi untuk logo / tulisan
+                brightnessSlider.value = "0.95";
+                brightnessInput.value = "0.95";
+                contrastSlider.value = "2.8";
+                contrastInput.value = "2.8";
+                sharpenSlider.value = "3.5";
+                sharpenInput.value = "3.5";
+                ditherModeSelect.value = "threshold"; // Pure black and white threshold
+                renderStickerLabel();
+            });
+
             // Tombol Reset Penyesuaian
             btnResetAdjust.addEventListener('click', () => {
                 brightnessSlider.value = "1.05";
                 brightnessInput.value = "1.05";
                 contrastSlider.value = "1.6";
                 contrastInput.value = "1.6";
+                sharpenSlider.value = "1.8";
+                sharpenInput.value = "1.8";
+                ditherModeSelect.value = "floyd";
                 renderStickerLabel();
             });
 
@@ -742,20 +845,15 @@
         }
 
         // =========================================================
-        // ALGORITMA PENAJAM GAMBAR (CONVOLUTION SHARPEN FILTER)
-        // Membantu agar cetakan hitam putih di printer thermal sangat tajam
+        // ALGORITMA PENAJAM GAMBAR (CONVOLUTION SHARPEN FILTER DENGAN KEKUATAN ADJUSTABLE)
+        // Membantu agar cetakan hitam putih di printer thermal sangat tajam & jelas
         // =========================================================
-        function sharpenImageData(imgData) {
-            const weights = [
-                 0, -1.2,  0,
-              -1.2,  5.8, -1.2,
-                 0, -1.2,  0
-            ]; // Matrix penajaman tepi ekstrem (sangat cocok untuk thermal)
-            const side = 3;
-            const halfSide = 1;
-            const src = imgData.data;
+        function sharpenImageData(imgData, amount) {
+            if (amount === 0) return imgData;
+
             const sw = imgData.width;
             const sh = imgData.height;
+            const src = imgData.data;
             
             const canvasTemp = document.createElement('canvas');
             canvasTemp.width = sw;
@@ -763,6 +861,23 @@
             const ctxTemp = canvasTemp.getContext('2d');
             const output = ctxTemp.createImageData(sw, sh);
             const dst = output.data;
+
+            // Matrix convolution sharpen dinamis:
+            // [  0,   -a,    0 ]
+            // [ -a,  1+4a,  -a ]
+            // [  0,   -a,    0 ]
+            const a = amount * 0.8; 
+            const center = 1 + (4 * a);
+            const edge = -a;
+
+            const weights = [
+                 0,    edge,   0,
+              edge,  center,  edge,
+                 0,    edge,   0
+            ];
+            
+            const side = 3;
+            const halfSide = 1;
 
             for (let y = 0; y < sh; y++) {
                 for (let x = 0; x < sw; x++) {
@@ -784,7 +899,7 @@
                     dst[dstOff]     = Math.min(255, Math.max(0, r));
                     dst[dstOff + 1] = Math.min(255, Math.max(0, g));
                     dst[dstOff + 2] = Math.min(255, Math.max(0, b));
-                    dst[dstOff + 3] = src[dstOff + 3];
+                    dst[dstOff + 3] = src[dstOff + 3]; // Alpha tetap utuh
                 }
             }
             return output;
@@ -870,13 +985,13 @@
             const pHeight = 210; 
 
             // Tinggi Frame Quotes yang stabil (Double-Bordered)
-            const quoteFrameHeight = 80; // Diperbesar dari 65 ke 80 agar memuat teks quotes yang lebih besar
+            const quoteFrameHeight = 85; // Diperbesar agar teks quotes besar muat dengan lega
             
             // Hitung Tinggi Canvas Total secara dinamis agar presisi dan tidak tumpang tindih
-            const py = 180; // Diperbesar sedikit dari 165 agar memberi ruang pada Brand Header
+            const py = 180; 
             const qby = py + pHeight + 20; 
             const textYStart = qby + quoteFrameHeight + 35; 
-            const barcodeYStart = textYStart + 55; // Ditambah jarak agar teks detail minuman tidak mepet
+            const barcodeYStart = textYStart + 55; 
             const totalHeight = barcodeYStart + 90; // Diperpanjang sedikit untuk menyeimbangkan footer
 
             targetCanvas.width = targetWidth;
@@ -892,44 +1007,44 @@
             ctx.fillStyle = '#000000';
             ctx.textAlign = 'center';
             
-            // Nama Kafe (Diperbesar dari 20px ke 24px dan dipastikan SANGAT TEBAL)
+            // Nama Kafe (Super Tebal)
             ctx.font = "bold 24px 'Courier Prime', Courier, monospace";
             ctx.fillText(BRAND_NAME, targetWidth / 2, 38);
             
-            // Sub-tag Estetik (Dibuat Tebal dari 10px ke 12px)
+            // Sub-tag Estetik (Dibuat Sangat Tebal)
             ctx.font = "bold 12px 'Courier Prime', Courier, monospace";
             ctx.fillText(`* ${EST_TAG} * STICKER COFFEE COMPANION *`, targetWidth / 2, 58);
 
-            // Garis Gunting Bermotif Kasir Klasik (Lebih Tebal)
+            // Garis Gunting Bermotif Kasir Klasik (Sangat Tebal)
             drawDashedLine(0, 75, targetWidth, 75, 6);
 
             // ============================================
             // BAGIAN 2: INFO NOMOR ANTREAN & NAMA (BESAR & TEBAL)
             // ============================================
-            // Nomor Antrean (Diperbesar dari 36px ke 44px agar sangat mencolok di kertas thermal)
+            // Nomor Antrean (Sangat Tebal)
             ctx.textAlign = 'right';
             ctx.font = "bold 44px 'Courier Prime', Courier, monospace";
             ctx.fillText(orderNo.value, targetWidth - contentX, 130);
 
-            // Detail Nama Pelanggan (Diperbesar dari 24px ke 28px agar sangat tegas terbaca)
+            // Detail Nama Pelanggan (Sangat Tebal)
             ctx.textAlign = 'left';
             ctx.font = "bold 28px 'Courier Prime', Courier, monospace";
             ctx.fillText(custName.value.toUpperCase(), contentX, 122);
 
-            // Real-time DateTime Stamp di bawah Nama (Dibuat tebal dan sedikit lebih besar)
+            // Real-time DateTime Stamp di bawah Nama
             ctx.font = "bold 12px 'Courier Prime', Courier, monospace";
             ctx.fillStyle = '#000000';
             ctx.fillText(getFormattedDateTime(), contentX, 142);
 
-            // Garis pembatas (Dibuat 2px lebih tebal agar pembatas tegas)
+            // Garis pembatas (Sangat Tebal)
             ctx.fillStyle = '#000000';
             ctx.fillRect(contentX, 153, targetWidth - (contentX * 2), 3);
 
             // ============================================
-            // BAGIAN 3: FOTO TER-DITHERING DENGAN KONTROL MANUAL
+            // BAGIAN 3: FOTO DENGAN PRESET FILTER & KETAJAMAN HD
             // ============================================
             if (userPhoto) {
-                // Bingkai terluar Polaroid (Garis bingkai dibuat tebal 3px)
+                // Bingkai terluar Polaroid (Tebal)
                 ctx.strokeStyle = '#000000';
                 ctx.lineWidth = 3;
                 ctx.strokeRect(contentX, py, pWidth, pHeight);
@@ -945,9 +1060,13 @@
                 offCanvas.height = imgInnerHeight;
                 const offCtx = offCanvas.getContext('2d');
 
-                // MENGGUNAKAN VALUE SINKRONISASI DARI SLIDER/INPUT MANUAL
+                // Ambil nilai filter dari slider manual atau preset
                 const currentContrast = parseFloat(contrastSlider.value);
                 const currentBrightness = parseFloat(brightnessSlider.value);
+                const currentSharpen = parseFloat(sharpenSlider.value);
+                const currentDitherMode = ditherModeSelect.value;
+
+                // Terapkan penyesuaian kecerahan dan kontras di tingkat filter browser
                 offCtx.filter = `contrast(${currentContrast}) brightness(${currentBrightness}) grayscale(100%)`;
 
                 // LOGIK AUTO-CROP ("Object-Fit: Cover")
@@ -966,22 +1085,31 @@
                 offCtx.drawImage(userPhoto, sx, sy, sw, sh, 0, 0, imgInnerWidth, imgInnerHeight);
 
                 let imgData = offCtx.getImageData(0, 0, imgInnerWidth, imgInnerHeight);
-                imgData = sharpenImageData(imgData); // Penajaman HD
+                
+                // 1. Terapkan Filter Penajaman HD Matriks Konvolusi
+                imgData = sharpenImageData(imgData, currentSharpen); 
 
-                applyAtkinsonDither(imgData);
+                // 2. Terapkan Dithering sesuai pilihan Algoritma
+                if (currentDitherMode === "floyd") {
+                    applyFloydSteinbergDither(imgData);
+                } else if (currentDitherMode === "atkinson") {
+                    applyAtkinsonDither(imgData);
+                } else {
+                    applyThresholdBinarize(imgData);
+                }
+
                 offCtx.putImageData(imgData, 0, 0);
-
                 ctx.drawImage(offCanvas, imgX, imgY);
             }
 
             // ============================================
-            // BAGIAN NEW: BINGKAI FRAME QUOTES KEKINIAN (TEBAL)
+            // BAGIAN 4: BINGKAI FRAME QUOTES KEKINIAN (TEBAL)
             // ============================================
-            // Gambar Frame Box Quotes Vintage (Double Border Lebih Tebal)
+            // Gambar Frame Box Quotes Vintage (Double Border Sangat Tebal)
             ctx.strokeStyle = '#000000';
-            ctx.lineWidth = 2.5;
+            ctx.lineWidth = 3;
             ctx.strokeRect(contentX, qby, pWidth, quoteFrameHeight);
-            ctx.lineWidth = 1.2;
+            ctx.lineWidth = 1.5;
             ctx.strokeRect(contentX + 4, qby + 4, pWidth - 8, quoteFrameHeight - 8);
 
             // Ambil teks quotes pilihan atau kustom
@@ -990,50 +1118,92 @@
                 quoteText = "Semoga harimu menyenangkan! ✨"; 
             }
             
-            // Atur gaya font Quotes (Diperbesar dari 11px ke 13px & Tebal Sempurna)
+            // Atur gaya font Quotes (Tebal & Jelas)
             ctx.fillStyle = '#000000';
             ctx.textAlign = 'center';
             ctx.font = "italic bold 13px 'Courier Prime', Courier, monospace";
             
-            // Gambar teks quotes rapi di tengah bingkai (Line-height disesuaikan menjadi 17px)
-            wrapText(ctx, `"${quoteText}"`, targetWidth / 2, qby + 28, pWidth - 28, 17);
+            // Gambar teks quotes rapi di tengah bingkai
+            wrapText(ctx, `"${quoteText}"`, targetWidth / 2, qby + 28, pWidth - 28, 18);
 
             // ============================================
-            // BAGIAN 4: DETAIL MINUMAN & CATATAN (BESAR & SANGAT TEBAL)
+            // BAGIAN 5: DETAIL MINUMAN & CATATAN (BESAR & SANGAT TEBAL)
             // ============================================
             ctx.textAlign = 'left';
             
-            // Nama Produk / Minuman (Diperbesar dari 18px ke 22px + Super Bold)
+            // Nama Produk / Minuman (Super Bold)
             ctx.fillStyle = '#000000';
             ctx.font = "bold 22px 'Courier Prime', Courier, monospace";
             ctx.fillText(drinkName.value.toUpperCase(), contentX, textYStart);
 
-            // Kustomisasi/Catatan Minuman (Diperbesar dari 12px ke 14px + Bold)
+            // Kustomisasi/Catatan Minuman (Sangat Bold)
             ctx.font = "bold 14px 'Courier Prime', Courier, monospace";
             ctx.fillText("RECIPE: " + drinkNote.value, contentX, textYStart + 25);
 
             // ===================================================
-            // BAGIAN BARU: BARCODE MINIMALIS ESTETIK (KOREAN VIBE)
+            // BAGIAN 6: BARCODE MINIMALIS ESTETIK (KOREAN VIBE)
             // ===================================================
             const barcodeWidth = baseContentWidth - 40;
             const barcodeX = (targetWidth - barcodeWidth) / 2;
             
-            // Gambar Barcode di tengah-tengah (Ditambah tinggi dari 15px ke 20px agar terbaca scanner laser kasir)
+            // Gambar Barcode di tengah-tengah
             drawAestheticBarcode(ctx, barcodeX, barcodeYStart, barcodeWidth, 20);
 
-            // Footer Estetik / Terima Kasih (Diperbesar ke 13px & 11px + Bold)
+            // Footer Estetik / Terima Kasih (Bold)
             ctx.textAlign = 'center';
             ctx.font = "italic bold 13px 'Courier Prime', Courier, monospace";
             ctx.fillText("Terima kasih atas kunjungan Anda!", targetWidth / 2, barcodeYStart + 43);
             ctx.font = "bold 11px 'Courier Prime', Courier, monospace";
             ctx.fillText("Harap tempelkan stiker ini di luar permukaan gelas kering", targetWidth / 2, barcodeYStart + 58);
 
-            // Garis Potong Bawah
+            // Garis Potong Bawah (Lebih Tebal)
             drawDashedLine(0, totalHeight - 12, targetWidth, totalHeight - 12, 6);
         }
 
         // ========================================================
-        // ALGORITMA DITHERING ATKINSON (EFEK BINTIK-BINTIK KLASIK)
+        // ALGORITMA DITHERING 1: FLOYD-STEINBERG (SANGAT DETAIL & HALUS)
+        // Paling bagus untuk mempertahankan tekstur wajah/selfie asli
+        // ========================================================
+        function applyFloydSteinbergDither(imgData) {
+            const data = imgData.data;
+            const w = imgData.width;
+            const h = imgData.height;
+
+            const grayBuf = new Float32Array(w * h);
+            for (let i = 0; i < data.length; i += 4) {
+                grayBuf[i / 4] = 0.299 * data[i] + 0.587 * data[i+1] + 0.114 * data[i+2];
+            }
+
+            for (let y = 0; y < h; y++) {
+                for (let x = 0; x < w; x++) {
+                    const idx = y * w + x;
+                    const oldGray = grayBuf[idx];
+                    const newGray = oldGray < 128 ? 0 : 255;
+                    const error = oldGray - newGray;
+
+                    grayBuf[idx] = newGray;
+
+                    // Distribusi error Floyd-Steinberg:
+                    //       *   7/16
+                    // 3/16 5/16 1/16
+                    distributeError(grayBuf, x + 1, y,     w, h, error * (7 / 16));
+                    distributeError(grayBuf, x - 1, y + 1, w, h, error * (3 / 16));
+                    distributeError(grayBuf, x,     y + 1, w, h, error * (5 / 16));
+                    distributeError(grayBuf, x + 1, y + 1, w, h, error * (1 / 16));
+                }
+            }
+
+            for (let i = 0; i < grayBuf.length; i++) {
+                const val = grayBuf[i];
+                const rIdx = i * 4;
+                data[rIdx] = data[rIdx+1] = data[rIdx+2] = val;
+                data[rIdx+3] = 255;
+            }
+        }
+
+        // ========================================================
+        // ALGORITMA DITHERING 2: ATKINSON (EFEK BINTIK RETRO KLASIK)
+        // Memberikan kontras bintik yang kuat & artistik
         // ========================================================
         function applyAtkinsonDither(imgData) {
             const data = imgData.data;
@@ -1054,9 +1224,10 @@
 
                     grayBuf[idx] = newGray;
 
+                    // Distribusi error Atkinson (membagi ke 6 tetangga sebesar 1/8)
                     const e = error / 8;
-                    distributeError(grayBuf, x + 1, y, w, h, e);
-                    distributeError(grayBuf, x + 2, y, w, h, e);
+                    distributeError(grayBuf, x + 1, y,     w, h, e);
+                    distributeError(grayBuf, x + 2, y,     w, h, e);
                     distributeError(grayBuf, x - 1, y + 1, w, h, e);
                     distributeError(grayBuf, x,     y + 1, w, h, e);
                     distributeError(grayBuf, x + 1, y + 1, w, h, e);
@@ -1072,6 +1243,20 @@
             }
         }
 
+        // ========================================================
+        // ALGORITMA DITHERING 3: THRESHOLD BINARIZE (HITAM PUTIH TEGAS)
+        // Cocok untuk logo, teks murni tanpa abu-abu
+        // ========================================================
+        function applyThresholdBinarize(imgData) {
+            const data = imgData.data;
+            for (let i = 0; i < data.length; i += 4) {
+                const gray = 0.299 * data[i] + 0.587 * data[i+1] + 0.114 * data[i+2];
+                const val = gray < 128 ? 0 : 255;
+                data[i] = data[i+1] = data[i+2] = val;
+                data[i+3] = 255;
+            }
+        }
+
         function distributeError(buf, x, y, w, h, err) {
             if (x < 0 || x >= w || y < 0 || y >= h) return;
             buf[y * w + x] += err;
@@ -1082,7 +1267,7 @@
         // ============================================
         function drawDashedLine(x1, y1, x2, y2, strokeSize) {
             ctx.strokeStyle = '#000000';
-            ctx.lineWidth = 3; // Dipertebal dari 2 ke 3
+            ctx.lineWidth = 3; 
             ctx.setLineDash([strokeSize, strokeSize]);
             ctx.beginPath();
             ctx.moveTo(x1, y1);
@@ -1093,7 +1278,7 @@
 
         function drawSolidLine(x1, y1, x2, y2) {
             ctx.strokeStyle = '#000000';
-            ctx.lineWidth = 1.5; // Dipertebal sedikit
+            ctx.lineWidth = 2; 
             ctx.beginPath();
             ctx.moveTo(x1, y1);
             ctx.lineTo(x2, y2);
