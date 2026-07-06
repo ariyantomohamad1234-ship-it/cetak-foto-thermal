@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cup Label Printer - Thermal Photo Sticker</title>
+    <!-- Tailwind CSS untuk Desain Antarmuka Modern -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
@@ -56,6 +57,7 @@
 </head>
 <body class="text-slate-800 min-h-screen flex flex-col">
 
+    <!-- Header Utama -->
     <header class="bg-white border-b border-slate-200 py-4 px-6 sticky top-0 z-10 shadow-sm">
         <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
             <div class="flex items-center gap-3">
@@ -66,22 +68,25 @@
                 </div>
                 <div>
                     <h1 class="text-xl font-extrabold tracking-tight text-slate-900">Cup Sticker Creator</h1>
-                    <p class="text-xs text-slate-500">Cetak Foto & Label Minuman Estetik untuk Gelas</p>
+                    <p class="text-xs text-slate-500">Cetak Foto & Label Minuman Estetik untuk Gelas (Tulisan Tebal & HD)</p>
                 </div>
             </div>
             
             <div class="flex items-center gap-2">
-                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-indigo-50 text-indigo-700">
-                    📸 Standardized Sticker Size Active
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 shadow-sm border border-emerald-200">
+                    📸 Standardized Bold Sticker Active
                 </span>
             </div>
         </div>
     </header>
 
+    <!-- Konten Utama -->
     <main class="flex-grow max-w-7xl w-full mx-auto p-4 lg:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
         
+        <!-- Kolom Kiri: Panel Kontrol & Input -->
         <section class="lg:col-span-7 space-y-6">
             
+            <!-- 1. Input Gambar (Opsi Upload File & Kamera Langsung) -->
             <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
                 <h2 class="text-md font-bold mb-4 flex items-center gap-2 text-slate-900">
                     <span class="bg-indigo-50 text-indigo-600 p-1 rounded-lg">1</span> 
@@ -89,6 +94,7 @@
                 </h2>
 
                 <div class="space-y-4">
+                    <!-- Tombol Navigasi Metode -->
                     <div class="flex gap-2">
                         <button id="btnSelectFile" class="flex-1 bg-indigo-600 text-white hover:bg-indigo-500 py-3 px-4 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2">
                             📁 Upload File Gambar
@@ -98,6 +104,7 @@
                         </button>
                     </div>
 
+                    <!-- Area 1: Unggah Berkas Tradisional (Dropzone) -->
                     <div id="fileUploadArea" class="block">
                         <div id="dropzone" class="border-2 border-dashed border-slate-300 hover:border-indigo-500 rounded-xl p-8 transition-all text-center cursor-pointer bg-slate-50 hover:bg-indigo-50/20 group">
                             <input type="file" id="imageInput" accept="image/*" class="hidden">
@@ -113,6 +120,7 @@
                         </div>
                     </div>
 
+                    <!-- Area 2: Kamera Live Langsung -->
                     <div id="cameraArea" class="hidden space-y-3">
                         <div class="relative overflow-hidden rounded-xl bg-slate-900 aspect-video flex items-center justify-center border border-slate-200 shadow-inner">
                             <video id="webcam" autoplay playsinline muted class="w-full h-full object-cover mirror-feed"></video>
@@ -136,6 +144,7 @@
                 </div>
             </div>
 
+            <!-- 2. Data Pesanan / Label Minuman -->
             <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
                 <h2 class="text-md font-bold mb-4 flex items-center gap-2 text-slate-900">
                     <span class="bg-indigo-50 text-indigo-600 p-1 rounded-lg">2</span> 
@@ -160,6 +169,7 @@
                         <input type="text" id="drinkNote" value="Less Ice, Normal Sugar" class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all placeholder-slate-400 text-slate-600">
                     </div>
                     
+                    <!-- Form Quotes Kekinian dengan Tombol Generator Acak -->
                     <div class="md:col-span-2 space-y-3 pt-2">
                         <div class="flex items-center justify-between">
                             <label class="block text-xs font-semibold text-slate-600">Quotes Kekinian untuk Pelanggan</label>
@@ -168,17 +178,19 @@
                             </button>
                         </div>
                         <div>
+                            <!-- JS akan mengisi dropdown quotes secara otomatis agar kode rapi -->
                             <select id="quoteSelect" class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all font-medium bg-slate-50">
                             </select>
                         </div>
                         <div id="customQuoteContainer" class="hidden">
                             <label class="block text-xs font-semibold text-slate-600 mb-1.5">Quotes Kustom Anda</label>
-                            <input type="text" id="customQuote" value="Semoga harimu menyenangkan luar biasa! ✨" placeholder="Tulis quotes keren di sini..." class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all text-slate-600">
+                            <input type="text" id="customQuote" value="Semoga harimu menyenangkan luar biasa! ✨" placeholder="Tulis quotes keren di sini..." class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all text-slate-600 font-bold">
                         </div>
                     </div>
                 </div>
             </div>
 
+            <!-- 3. Konfigurasi Printer & Efek Pencahayaan Gambar -->
             <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-6">
                 <div>
                     <h2 class="text-md font-bold mb-4 flex items-center gap-2 text-slate-900">
@@ -201,22 +213,46 @@
                     </div>
                 </div>
 
-                <div class="border-t border-slate-100 pt-4 space-y-4">
-                    <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500">Penyesuaian Gambar Thermal</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <div class="flex justify-between text-xs font-semibold text-slate-600 mb-1.5">
-                                <label for="contrastSlider">Kontras Gambar</label>
-                                <span id="contrastVal">1.5x</span>
+                <!-- Fitur Penyesuaian Cahaya & Kontras Gambar dengan Input Manual Dinamis -->
+                <div class="border-t border-slate-100 pt-5 space-y-5">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500">Penyesuaian Gambar Thermal (Kontrol Presisi)</h3>
+                        <button id="btnResetAdjust" type="button" class="text-xs font-bold text-indigo-600 hover:text-indigo-500 transition-colors">
+                            🔄 Reset Penyesuaian
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- KONTROL MANUAL KECERAHAN (BRIGHTNESS) -->
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center text-xs font-bold text-slate-700">
+                                <label for="brightnessSlider">🔆 Terang / Gelap Gambar</label>
+                                <div class="flex items-center gap-1.5">
+                                    <input type="number" id="brightnessInput" min="0.2" max="2.5" step="0.05" value="1.05" class="w-16 text-center border border-slate-200 rounded-md py-0.5 px-1 focus:outline-none focus:ring-1 focus:ring-indigo-500 font-bold text-slate-800">
+                                    <span class="text-slate-400">x</span>
+                                </div>
                             </div>
-                            <input type="range" id="contrastSlider" min="0.5" max="3.0" step="0.1" value="1.5" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
+                            <div class="flex items-center gap-3">
+                                <span class="text-[10px] text-slate-400 font-semibold">GELAP</span>
+                                <input type="range" id="brightnessSlider" min="0.2" max="2.5" step="0.05" value="1.05" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
+                                <span class="text-[10px] text-slate-400 font-semibold">TERANG</span>
+                            </div>
                         </div>
-                        <div>
-                            <div class="flex justify-between text-xs font-semibold text-slate-600 mb-1.5">
-                                <label for="brightnessSlider">Kecerahan (Brightness)</label>
-                                <span id="brightnessVal">1.05x</span>
+
+                        <!-- KONTROL MANUAL KONTRAS (CONTRAST) -->
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center text-xs font-bold text-slate-700">
+                                <label for="contrastSlider">🌗 Kontras (Kepekatan Hitam)</label>
+                                <div class="flex items-center gap-1.5">
+                                    <input type="number" id="contrastInput" min="0.5" max="4.0" step="0.1" value="1.6" class="w-16 text-center border border-slate-200 rounded-md py-0.5 px-1 focus:outline-none focus:ring-1 focus:ring-indigo-500 font-bold text-slate-800">
+                                    <span class="text-slate-400">x</span>
+                                </div>
                             </div>
-                            <input type="range" id="brightnessSlider" min="0.5" max="2.0" step="0.05" value="1.05" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
+                            <div class="flex items-center gap-3">
+                                <span class="text-[10px] text-slate-400 font-semibold">LEMBUT</span>
+                                <input type="range" id="contrastSlider" min="0.5" max="4.0" step="0.1" value="1.6" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
+                                <span class="text-[10px] text-slate-400 font-semibold">TAJAM</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -224,19 +260,23 @@
 
         </section>
 
+        <!-- Kolom Kanan: Pratinjau Realistis & Tombol Print -->
         <section class="lg:col-span-5 flex flex-col">
             <div class="bg-slate-900 rounded-3xl p-6 lg:p-8 flex-grow flex flex-col justify-between text-white shadow-xl sticky top-28">
                 <div>
                     <span class="text-xs font-bold uppercase tracking-wider text-indigo-400">Live Preview</span>
                     <h2 class="text-lg font-extrabold mt-1 mb-6 text-white">Pratinjau Stiker Gelas</h2>
                     
+                    <!-- Wadah Simulasi Kertas Struk / Label -->
                     <div class="flex justify-center mb-6">
                         <div class="bg-white text-slate-900 p-4 shadow-2xl transition-all duration-300 overflow-hidden" id="printArea" style="width: 240px;">
+                            <!-- Canvas Render Utama -->
                             <canvas id="targetCanvas" class="w-full h-auto block"></canvas>
                         </div>
                     </div>
                 </div>
 
+                <!-- Bagian Tombol Aksi -->
                 <div class="space-y-3">
                     <button id="btnPrint" class="w-full bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white font-bold py-4 px-6 rounded-2xl shadow-lg shadow-indigo-900/30 transition-all flex items-center justify-center gap-3 text-base">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -253,12 +293,14 @@
         
     </main>
 
+    <!-- Footer -->
     <footer class="bg-white border-t border-slate-200 py-6 mt-12 text-center text-xs text-slate-500">
         <div class="max-w-7xl mx-auto px-6">
             <p>© 2026 Daily Cup Sticker Thermal Printer Companion. Dioptimalkan untuk Kertas Label Thermal.</p>
         </div>
     </footer>
 
+    <!-- LOGIK PEMROSESAN GAMBAR (JAVASCRIPT) -->
     <script>
         // Nama Kafe Paten & Berkelas (Locked)
         const BRAND_NAME = "DAILY COFFEE & CO.";
@@ -413,11 +455,12 @@
         const btnCloseCamera = document.getElementById('btnCloseCamera');
         const cameraStatus = document.getElementById('cameraStatus');
 
-        // Elemen Sliders Baru (Kontras & Brightness)
-        const contrastSlider = document.getElementById('contrastSlider');
+        // Elemen Pengatur Kecerahan dan Kontras Gambar
         const brightnessSlider = document.getElementById('brightnessSlider');
-        const contrastVal = document.getElementById('contrastVal');
-        const brightnessVal = document.getElementById('brightnessVal');
+        const brightnessInput = document.getElementById('brightnessInput');
+        const contrastSlider = document.getElementById('contrastSlider');
+        const contrastInput = document.getElementById('contrastInput');
+        const btnResetAdjust = document.getElementById('btnResetAdjust');
 
         let userPhoto = null; // Menyimpan objek gambar asli yang diunggah
         let localStream = null; // Menyimpan stream kamera aktif
@@ -613,14 +656,44 @@
                 });
             });
 
-            // Event listener untuk Sliders Kontras & Brightness Baru
-            contrastSlider.addEventListener('input', (e) => {
-                contrastVal.innerText = `${e.target.value}x`;
+            // ========================================================
+            // SINKRONISASI COUPLING: SLIDERS & INPUT ANGKA MANUAL
+            // ========================================================
+            
+            // Kecerahan (Brightness)
+            brightnessSlider.addEventListener('input', (e) => {
+                brightnessInput.value = e.target.value;
+                renderStickerLabel();
+            });
+            brightnessInput.addEventListener('input', (e) => {
+                let val = parseFloat(e.target.value);
+                if (isNaN(val)) val = 1.0;
+                if (val < 0.2) val = 0.2;
+                if (val > 2.5) val = 2.5;
+                brightnessSlider.value = val;
                 renderStickerLabel();
             });
 
-            brightnessSlider.addEventListener('input', (e) => {
-                brightnessVal.innerText = `${e.target.value}x`;
+            // Kontras (Contrast)
+            contrastSlider.addEventListener('input', (e) => {
+                contrastInput.value = e.target.value;
+                renderStickerLabel();
+            });
+            contrastInput.addEventListener('input', (e) => {
+                let val = parseFloat(e.target.value);
+                if (isNaN(val)) val = 1.0;
+                if (val < 0.5) val = 0.5;
+                if (val > 4.0) val = 4.0;
+                contrastSlider.value = val;
+                renderStickerLabel();
+            });
+
+            // Tombol Reset Penyesuaian
+            btnResetAdjust.addEventListener('click', () => {
+                brightnessSlider.value = "1.05";
+                brightnessInput.value = "1.05";
+                contrastSlider.value = "1.6";
+                contrastInput.value = "1.6";
                 renderStickerLabel();
             });
 
@@ -743,7 +816,6 @@
 
         // =========================================================
         // GENERATOR BARCODE ESTETIK DI BAGIAN BAWAH STIKER
-        // Meniru tata letak kafe modern di Korea/Jepang agar sangat estetik difoto
         // =========================================================
         function drawAestheticBarcode(context, x, y, width, height) {
             context.fillStyle = '#000000';
@@ -781,29 +853,31 @@
             return `${day}.${month}.${year} - ${hours}:${minutes}`;
         }
 
-        // FUNGSI UTAMA: Menggambar Seluruh Stiker di Canvas (Teks + Gambar Ter-Dithering)
+        // =========================================================
+        // FUNGSI UTAMA: Menggambar Seluruh Stiker di Canvas (Teks Tebal + Dithering)
+        // =========================================================
         function renderStickerLabel() {
             let activeWidth = 58;
             radioWidths.forEach(r => { if (r.checked) activeWidth = parseInt(r.value); });
             const targetWidth = activeWidth === 58 ? 384 : 576;
 
-            // ATURAN KONSISTENSI: Semua elemen konten memiliki lebar tetap 324px (nyaman di 58mm & rapi di 80mm)
+            // Elemen konten memiliki lebar tetap 324px (nyaman di 58mm & rapi di 80mm)
             const baseContentWidth = 324;
             const contentX = (targetWidth - baseContentWidth) / 2;
 
-            // ATURAN UKURAN TETAP: Ukuran bingkai foto Polaroid dikunci mati secara konstan!
+            // Ukuran bingkai foto Polaroid dikunci mati secara konstan!
             const pWidth = baseContentWidth;
             const pHeight = 210; 
 
             // Tinggi Frame Quotes yang stabil (Double-Bordered)
-            const quoteFrameHeight = 65;
+            const quoteFrameHeight = 80; // Diperbesar dari 65 ke 80 agar memuat teks quotes yang lebih besar
             
-            // Hitung Tinggi Canvas Total secara dinamis (Sangat Rapi, Seimbang & Permanen)
-            const py = 165; 
-            const qby = py + pHeight + 15; 
-            const textYStart = qby + quoteFrameHeight + 30; 
-            const barcodeYStart = textYStart + 42; 
-            const totalHeight = barcodeYStart + 70; // Tinggi konstan stiker 597px!
+            // Hitung Tinggi Canvas Total secara dinamis agar presisi dan tidak tumpang tindih
+            const py = 180; // Diperbesar sedikit dari 165 agar memberi ruang pada Brand Header
+            const qby = py + pHeight + 20; 
+            const textYStart = qby + quoteFrameHeight + 35; 
+            const barcodeYStart = textYStart + 55; // Ditambah jarak agar teks detail minuman tidak mepet
+            const totalHeight = barcodeYStart + 90; // Diperpanjang sedikit untuk menyeimbangkan footer
 
             targetCanvas.width = targetWidth;
             targetCanvas.height = totalHeight;
@@ -813,54 +887,54 @@
             ctx.fillRect(0, 0, targetWidth, totalHeight);
 
             // ============================================
-            // BAGIAN 1: HEADER BRAND & EST. TAG (PATEN)
+            // BAGIAN 1: HEADER BRAND & EST. TAG (PATEN & TEBAL)
             // ============================================
             ctx.fillStyle = '#000000';
             ctx.textAlign = 'center';
             
-            // Nama Kafe (Brand yang sudah dipatenkan)
-            ctx.font = "bold 20px 'Courier Prime', Courier, monospace";
-            ctx.fillText(BRAND_NAME, targetWidth / 2, 35);
-            
-            // Sub-tag Estetik "EST. 2026"
-            ctx.font = "10px 'Courier Prime', Courier, monospace";
-            ctx.fillText(`* ${EST_TAG} * STICKER COFFEE COMPANION *`, targetWidth / 2, 53);
-
-            // Garis Gunting Bermotif Kasir Klasik
-            drawDashedLine(0, 70, targetWidth, 70, 6);
-
-            // ============================================
-            // BAGIAN 2: INFO NOMOR ANTREAN & NAMA (TANPA "NAMA:")
-            // ============================================
-            // Nomor Antrean (Kanan Atas)
-            ctx.textAlign = 'right';
-            ctx.font = "bold 36px 'Courier Prime', Courier, monospace";
-            ctx.fillText(orderNo.value, targetWidth - contentX, 125);
-
-            // Detail Nama Pelanggan (Kiri Atas - Huruf Besar, Tebal, & Sangat Estetik)
-            ctx.textAlign = 'left';
+            // Nama Kafe (Diperbesar dari 20px ke 24px dan dipastikan SANGAT TEBAL)
             ctx.font = "bold 24px 'Courier Prime', Courier, monospace";
-            ctx.fillText(custName.value.toUpperCase(), contentX, 120);
+            ctx.fillText(BRAND_NAME, targetWidth / 2, 38);
+            
+            // Sub-tag Estetik (Dibuat Tebal dari 10px ke 12px)
+            ctx.font = "bold 12px 'Courier Prime', Courier, monospace";
+            ctx.fillText(`* ${EST_TAG} * STICKER COFFEE COMPANION *`, targetWidth / 2, 58);
 
-            // Real-time DateTime Stamp di bawah Nama
-            ctx.font = "10px 'Courier Prime', Courier, monospace";
-            ctx.fillStyle = '#333333';
-            ctx.fillText(getFormattedDateTime(), contentX, 137);
-
-            // Garis pembatas tipis
-            ctx.fillStyle = '#000000';
-            drawSolidLine(contentX, 146, targetWidth - contentX, 146);
+            // Garis Gunting Bermotif Kasir Klasik (Lebih Tebal)
+            drawDashedLine(0, 75, targetWidth, 75, 6);
 
             // ============================================
-            // BAGIAN 3: FOTO TER-DITHERING DENGAN SHARPENING HD (AUTO-CROP)
+            // BAGIAN 2: INFO NOMOR ANTREAN & NAMA (BESAR & TEBAL)
+            // ============================================
+            // Nomor Antrean (Diperbesar dari 36px ke 44px agar sangat mencolok di kertas thermal)
+            ctx.textAlign = 'right';
+            ctx.font = "bold 44px 'Courier Prime', Courier, monospace";
+            ctx.fillText(orderNo.value, targetWidth - contentX, 130);
+
+            // Detail Nama Pelanggan (Diperbesar dari 24px ke 28px agar sangat tegas terbaca)
+            ctx.textAlign = 'left';
+            ctx.font = "bold 28px 'Courier Prime', Courier, monospace";
+            ctx.fillText(custName.value.toUpperCase(), contentX, 122);
+
+            // Real-time DateTime Stamp di bawah Nama (Dibuat tebal dan sedikit lebih besar)
+            ctx.font = "bold 12px 'Courier Prime', Courier, monospace";
+            ctx.fillStyle = '#000000';
+            ctx.fillText(getFormattedDateTime(), contentX, 142);
+
+            // Garis pembatas (Dibuat 2px lebih tebal agar pembatas tegas)
+            ctx.fillStyle = '#000000';
+            ctx.fillRect(contentX, 153, targetWidth - (contentX * 2), 3);
+
+            // ============================================
+            // BAGIAN 3: FOTO TER-DITHERING DENGAN KONTROL MANUAL
             // ============================================
             if (userPhoto) {
-                // Bingkai terluar Polaroid
+                // Bingkai terluar Polaroid (Garis bingkai dibuat tebal 3px)
                 ctx.strokeStyle = '#000000';
-                ctx.lineWidth = 2;
+                ctx.lineWidth = 3;
                 ctx.strokeRect(contentX, py, pWidth, pHeight);
 
-                // Hitung letak canvas gambar di dalam bingkai (ada padding putih tipis)
+                // Letak kanvas gambar di dalam bingkai
                 const imgInnerWidth = Math.floor(pWidth - 16);
                 const imgInnerHeight = Math.floor(pHeight - 16);
                 const imgX = contentX + 8;
@@ -871,9 +945,9 @@
                 offCanvas.height = imgInnerHeight;
                 const offCtx = offCanvas.getContext('2d');
 
-                // MENGGUNAKAN NILAI DINAMIS DARI SLIDER UNTUK CONTRAST & BRIGHTNESS
-                const currentContrast = contrastSlider.value;
-                const currentBrightness = brightnessSlider.value;
+                // MENGGUNAKAN VALUE SINKRONISASI DARI SLIDER/INPUT MANUAL
+                const currentContrast = parseFloat(contrastSlider.value);
+                const currentBrightness = parseFloat(brightnessSlider.value);
                 offCtx.filter = `contrast(${currentContrast}) brightness(${currentBrightness}) grayscale(100%)`;
 
                 // LOGIK AUTO-CROP ("Object-Fit: Cover")
@@ -892,7 +966,7 @@
                 offCtx.drawImage(userPhoto, sx, sy, sw, sh, 0, 0, imgInnerWidth, imgInnerHeight);
 
                 let imgData = offCtx.getImageData(0, 0, imgInnerWidth, imgInnerHeight);
-                imgData = sharpenImageData(imgData); // Optimasi Tepi Gambar (HD Sharpness)
+                imgData = sharpenImageData(imgData); // Penajaman HD
 
                 applyAtkinsonDither(imgData);
                 offCtx.putImageData(imgData, 0, 0);
@@ -901,41 +975,42 @@
             }
 
             // ============================================
-            // BAGIAN NEW: BINGKAI FRAME QUOTES KEKINIAN
+            // BAGIAN NEW: BINGKAI FRAME QUOTES KEKINIAN (TEBAL)
             // ============================================
-            // Gambar Frame Box Quotes Vintage (Double Border)
+            // Gambar Frame Box Quotes Vintage (Double Border Lebih Tebal)
             ctx.strokeStyle = '#000000';
-            ctx.lineWidth = 1.5;
+            ctx.lineWidth = 2.5;
             ctx.strokeRect(contentX, qby, pWidth, quoteFrameHeight);
-            ctx.strokeRect(contentX + 3, qby + 3, pWidth - 6, quoteFrameHeight - 6);
+            ctx.lineWidth = 1.2;
+            ctx.strokeRect(contentX + 4, qby + 4, pWidth - 8, quoteFrameHeight - 8);
 
             // Ambil teks quotes pilihan atau kustom
             let quoteText = quoteSelect.value === 'custom' ? customQuote.value : quoteSelect.value;
             if (!quoteText) {
-                quoteText = "Semoga harimu menyenangkan! ✨"; // Fallback jika kosong
+                quoteText = "Semoga harimu menyenangkan! ✨"; 
             }
             
-            // Atur gaya font Quotes
+            // Atur gaya font Quotes (Diperbesar dari 11px ke 13px & Tebal Sempurna)
             ctx.fillStyle = '#000000';
             ctx.textAlign = 'center';
-            ctx.font = "italic bold 11px 'Courier Prime', Courier, monospace";
+            ctx.font = "italic bold 13px 'Courier Prime', Courier, monospace";
             
-            // Gambar teks quotes rapi di tengah bingkai
-            wrapText(ctx, `"${quoteText}"`, targetWidth / 2, qby + 24, pWidth - 24, 15);
+            // Gambar teks quotes rapi di tengah bingkai (Line-height disesuaikan menjadi 17px)
+            wrapText(ctx, `"${quoteText}"`, targetWidth / 2, qby + 28, pWidth - 28, 17);
 
             // ============================================
-            // BAGIAN 4: DETAIL MINUMAN & CATATAN
+            // BAGIAN 4: DETAIL MINUMAN & CATATAN (BESAR & SANGAT TEBAL)
             // ============================================
             ctx.textAlign = 'left';
             
-            // Nama Produk / Minuman
+            // Nama Produk / Minuman (Diperbesar dari 18px ke 22px + Super Bold)
             ctx.fillStyle = '#000000';
-            ctx.font = "bold 18px 'Courier Prime', Courier, monospace";
+            ctx.font = "bold 22px 'Courier Prime', Courier, monospace";
             ctx.fillText(drinkName.value.toUpperCase(), contentX, textYStart);
 
-            // Kustomisasi/Catatan Minuman (Lebih kecil)
-            ctx.font = "12px 'Courier Prime', Courier, monospace";
-            ctx.fillText("RECIPE: " + drinkNote.value, contentX, textYStart + 23);
+            // Kustomisasi/Catatan Minuman (Diperbesar dari 12px ke 14px + Bold)
+            ctx.font = "bold 14px 'Courier Prime', Courier, monospace";
+            ctx.fillText("RECIPE: " + drinkNote.value, contentX, textYStart + 25);
 
             // ===================================================
             // BAGIAN BARU: BARCODE MINIMALIS ESTETIK (KOREAN VIBE)
@@ -943,18 +1018,18 @@
             const barcodeWidth = baseContentWidth - 40;
             const barcodeX = (targetWidth - barcodeWidth) / 2;
             
-            // Gambar Barcode di tengah-tengah
-            drawAestheticBarcode(ctx, barcodeX, barcodeYStart, barcodeWidth, 15);
+            // Gambar Barcode di tengah-tengah (Ditambah tinggi dari 15px ke 20px agar terbaca scanner laser kasir)
+            drawAestheticBarcode(ctx, barcodeX, barcodeYStart, barcodeWidth, 20);
 
-            // Footer Estetik / Terima Kasih
+            // Footer Estetik / Terima Kasih (Diperbesar ke 13px & 11px + Bold)
             ctx.textAlign = 'center';
-            ctx.font = "italic 11px 'Courier Prime', Courier, monospace";
-            ctx.fillText("Terima kasih atas kunjungan Anda!", targetWidth / 2, barcodeYStart + 38);
-            ctx.font = "9px 'Courier Prime', Courier, monospace";
-            ctx.fillText("Harap tempelkan stiker ini di luar permukaan gelas kering", targetWidth / 2, barcodeYStart + 50);
+            ctx.font = "italic bold 13px 'Courier Prime', Courier, monospace";
+            ctx.fillText("Terima kasih atas kunjungan Anda!", targetWidth / 2, barcodeYStart + 43);
+            ctx.font = "bold 11px 'Courier Prime', Courier, monospace";
+            ctx.fillText("Harap tempelkan stiker ini di luar permukaan gelas kering", targetWidth / 2, barcodeYStart + 58);
 
             // Garis Potong Bawah
-            drawDashedLine(0, totalHeight - 10, targetWidth, totalHeight - 10, 6);
+            drawDashedLine(0, totalHeight - 12, targetWidth, totalHeight - 12, 6);
         }
 
         // ========================================================
@@ -1007,7 +1082,7 @@
         // ============================================
         function drawDashedLine(x1, y1, x2, y2, strokeSize) {
             ctx.strokeStyle = '#000000';
-            ctx.lineWidth = 2;
+            ctx.lineWidth = 3; // Dipertebal dari 2 ke 3
             ctx.setLineDash([strokeSize, strokeSize]);
             ctx.beginPath();
             ctx.moveTo(x1, y1);
@@ -1018,7 +1093,7 @@
 
         function drawSolidLine(x1, y1, x2, y2) {
             ctx.strokeStyle = '#000000';
-            ctx.lineWidth = 1;
+            ctx.lineWidth = 1.5; // Dipertebal sedikit
             ctx.beginPath();
             ctx.moveTo(x1, y1);
             ctx.lineTo(x2, y2);
