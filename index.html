@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cup Label Printer - Thermal Photo Sticker</title>
-    <!-- Tailwind CSS untuk Desain Antarmuka Modern -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
@@ -57,7 +56,6 @@
 </head>
 <body class="text-slate-800 min-h-screen flex flex-col">
 
-    <!-- Header Utama -->
     <header class="bg-white border-b border-slate-200 py-4 px-6 sticky top-0 z-10 shadow-sm">
         <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
             <div class="flex items-center gap-3">
@@ -80,13 +78,10 @@
         </div>
     </header>
 
-    <!-- Konten Utama -->
     <main class="flex-grow max-w-7xl w-full mx-auto p-4 lg:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
         
-        <!-- Kolom Kiri: Panel Kontrol & Input -->
         <section class="lg:col-span-7 space-y-6">
             
-            <!-- 1. Input Gambar (Opsi Upload File & Kamera Langsung) -->
             <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
                 <h2 class="text-md font-bold mb-4 flex items-center gap-2 text-slate-900">
                     <span class="bg-indigo-50 text-indigo-600 p-1 rounded-lg">1</span> 
@@ -94,7 +89,6 @@
                 </h2>
 
                 <div class="space-y-4">
-                    <!-- Tombol Navigasi Metode -->
                     <div class="flex gap-2">
                         <button id="btnSelectFile" class="flex-1 bg-indigo-600 text-white hover:bg-indigo-500 py-3 px-4 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2">
                             📁 Upload File Gambar
@@ -104,7 +98,6 @@
                         </button>
                     </div>
 
-                    <!-- Area 1: Unggah Berkas Tradisional (Dropzone) -->
                     <div id="fileUploadArea" class="block">
                         <div id="dropzone" class="border-2 border-dashed border-slate-300 hover:border-indigo-500 rounded-xl p-8 transition-all text-center cursor-pointer bg-slate-50 hover:bg-indigo-50/20 group">
                             <input type="file" id="imageInput" accept="image/*" class="hidden">
@@ -120,7 +113,6 @@
                         </div>
                     </div>
 
-                    <!-- Area 2: Kamera Live Langsung -->
                     <div id="cameraArea" class="hidden space-y-3">
                         <div class="relative overflow-hidden rounded-xl bg-slate-900 aspect-video flex items-center justify-center border border-slate-200 shadow-inner">
                             <video id="webcam" autoplay playsinline muted class="w-full h-full object-cover mirror-feed"></video>
@@ -144,7 +136,6 @@
                 </div>
             </div>
 
-            <!-- 2. Data Pesanan / Label Minuman -->
             <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
                 <h2 class="text-md font-bold mb-4 flex items-center gap-2 text-slate-900">
                     <span class="bg-indigo-50 text-indigo-600 p-1 rounded-lg">2</span> 
@@ -169,7 +160,6 @@
                         <input type="text" id="drinkNote" value="Less Ice, Normal Sugar" class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all placeholder-slate-400 text-slate-600">
                     </div>
                     
-                    <!-- Form Quotes Kekinian dengan Tombol Generator Acak -->
                     <div class="md:col-span-2 space-y-3 pt-2">
                         <div class="flex items-center justify-between">
                             <label class="block text-xs font-semibold text-slate-600">Quotes Kekinian untuk Pelanggan</label>
@@ -178,7 +168,6 @@
                             </button>
                         </div>
                         <div>
-                            <!-- JS akan mengisi dropdown quotes secara otomatis agar kode rapi -->
                             <select id="quoteSelect" class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all font-medium bg-slate-50">
                             </select>
                         </div>
@@ -190,47 +179,64 @@
                 </div>
             </div>
 
-            <!-- 3. Konfigurasi Printer -->
-            <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
-                <h2 class="text-md font-bold mb-4 flex items-center gap-2 text-slate-900">
-                    <span class="bg-indigo-50 text-indigo-600 p-1 rounded-lg">3</span> 
-                    Ukuran Printer Struk Anda
-                </h2>
-                
-                <div class="grid grid-cols-2 gap-4">
-                    <label class="border-2 border-indigo-600 bg-indigo-50/30 rounded-xl p-4 flex flex-col justify-between cursor-pointer relative transition-all" id="labelPaper58">
-                        <input type="radio" name="paperWidth" value="58" checked class="absolute right-4 top-4 accent-indigo-600">
-                        <span class="text-sm font-bold text-slate-900 block">Lebar 58 mm</span>
-                        <span class="text-xs text-slate-500 mt-1">Printer Bluetooth Mini, Portable, Struk Kasir Kecil (~384px)</span>
-                    </label>
+            <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm space-y-6">
+                <div>
+                    <h2 class="text-md font-bold mb-4 flex items-center gap-2 text-slate-900">
+                        <span class="bg-indigo-50 text-indigo-600 p-1 rounded-lg">3</span> 
+                        Pengaturan Cetak & Gambar
+                    </h2>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <label class="border-2 border-indigo-600 bg-indigo-50/30 rounded-xl p-4 flex flex-col justify-between cursor-pointer relative transition-all" id="labelPaper58">
+                            <input type="radio" name="paperWidth" value="58" checked class="absolute right-4 top-4 accent-indigo-600">
+                            <span class="text-sm font-bold text-slate-900 block">Lebar 58 mm</span>
+                            <span class="text-xs text-slate-500 mt-1">Printer Bluetooth Mini, Portable, Struk Kasir Kecil (~384px)</span>
+                        </label>
 
-                    <label class="border border-slate-200 hover:border-slate-300 rounded-xl p-4 flex flex-col justify-between cursor-pointer relative transition-all" id="labelPaper80">
-                        <input type="radio" name="paperWidth" value="80" class="absolute right-4 top-4 accent-indigo-600">
-                        <span class="text-sm font-bold text-slate-900 block">Lebar 80 mm</span>
-                        <span class="text-xs text-slate-500 mt-1">Printer Kasir Besar / Standar EPSON, STAR (~576px)</span>
-                    </label>
+                        <label class="border border-slate-200 hover:border-slate-300 rounded-xl p-4 flex flex-col justify-between cursor-pointer relative transition-all" id="labelPaper80">
+                            <input type="radio" name="paperWidth" value="80" class="absolute right-4 top-4 accent-indigo-600">
+                            <span class="text-sm font-bold text-slate-900 block">Lebar 80 mm</span>
+                            <span class="text-xs text-slate-500 mt-1">Printer Kasir Besar / Standar EPSON, STAR (~576px)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="border-t border-slate-100 pt-4 space-y-4">
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500">Penyesuaian Gambar Thermal</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <div class="flex justify-between text-xs font-semibold text-slate-600 mb-1.5">
+                                <label for="contrastSlider">Kontras Gambar</label>
+                                <span id="contrastVal">1.5x</span>
+                            </div>
+                            <input type="range" id="contrastSlider" min="0.5" max="3.0" step="0.1" value="1.5" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs font-semibold text-slate-600 mb-1.5">
+                                <label for="brightnessSlider">Kecerahan (Brightness)</label>
+                                <span id="brightnessVal">1.05x</span>
+                            </div>
+                            <input type="range" id="brightnessSlider" min="0.5" max="2.0" step="0.05" value="1.05" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
+                        </div>
+                    </div>
                 </div>
             </div>
 
         </section>
 
-        <!-- Kolom Kanan: Pratinjau Realistis & Tombol Print -->
         <section class="lg:col-span-5 flex flex-col">
             <div class="bg-slate-900 rounded-3xl p-6 lg:p-8 flex-grow flex flex-col justify-between text-white shadow-xl sticky top-28">
                 <div>
                     <span class="text-xs font-bold uppercase tracking-wider text-indigo-400">Live Preview</span>
                     <h2 class="text-lg font-extrabold mt-1 mb-6 text-white">Pratinjau Stiker Gelas</h2>
                     
-                    <!-- Wadah Simulasi Kertas Struk / Label -->
                     <div class="flex justify-center mb-6">
                         <div class="bg-white text-slate-900 p-4 shadow-2xl transition-all duration-300 overflow-hidden" id="printArea" style="width: 240px;">
-                            <!-- Canvas Render Utama -->
                             <canvas id="targetCanvas" class="w-full h-auto block"></canvas>
                         </div>
                     </div>
                 </div>
 
-                <!-- Bagian Tombol Aksi -->
                 <div class="space-y-3">
                     <button id="btnPrint" class="w-full bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white font-bold py-4 px-6 rounded-2xl shadow-lg shadow-indigo-900/30 transition-all flex items-center justify-center gap-3 text-base">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -247,14 +253,12 @@
         
     </main>
 
-    <!-- Footer -->
     <footer class="bg-white border-t border-slate-200 py-6 mt-12 text-center text-xs text-slate-500">
         <div class="max-w-7xl mx-auto px-6">
             <p>© 2026 Daily Cup Sticker Thermal Printer Companion. Dioptimalkan untuk Kertas Label Thermal.</p>
         </div>
     </footer>
 
-    <!-- LOGIK PEMROSESAN GAMBAR (JAVASCRIPT) -->
     <script>
         // Nama Kafe Paten & Berkelas (Locked)
         const BRAND_NAME = "DAILY COFFEE & CO.";
@@ -333,10 +337,10 @@
                 "Hari ini ngomong dikit aja ya.",
                 "Kalau aku diem, bukan berarti nggak kesel.",
                 "Mood lagi tipis, kayak dompet akhir bulan.",
-                "Tolong jangan bikin aku ngulang penjelasan yang sama.",
+                "Tolong jangan bikin aku ngulang explanation yang sama.",
                 "Aku nggak marah, cuma kecewa level dewa.",
                 "Sabar itu ada batasnya, serius.",
-                "Kalau aku tarik napas panjang, itu pertanda bahaya.",
+                "Kalau aku menarik napas panjang, itu pertanda bahaya.",
                 "Hari ini semua orang kayaknya pengen nguji kesabaran.",
                 "Aku butuh ketenangan, bukan drama tambahan.",
                 "Lagi males debat sama siapa pun.",
@@ -347,7 +351,7 @@
                 "Hari ini jangan bikin kejutan ya.",
                 "Aku sedang menahan kata-kata yang tidak perlu keluar.",
                 "Kalau bisa selesai baik-baik, kenapa harus bikin ribet?",
-                "Kesabaranku tinggal sisa sedikit.",
+                "Kesabaran ku tinggal sisa sedikit.",
                 "Mohon maklum, sistem sedang sensitif."
             ],
             "😌 Tenang": [
@@ -408,6 +412,12 @@
         const btnSwitchCamera = document.getElementById('btnSwitchCamera');
         const btnCloseCamera = document.getElementById('btnCloseCamera');
         const cameraStatus = document.getElementById('cameraStatus');
+
+        // Elemen Sliders Baru (Kontras & Brightness)
+        const contrastSlider = document.getElementById('contrastSlider');
+        const brightnessSlider = document.getElementById('brightnessSlider');
+        const contrastVal = document.getElementById('contrastVal');
+        const brightnessVal = document.getElementById('brightnessVal');
 
         let userPhoto = null; // Menyimpan objek gambar asli yang diunggah
         let localStream = null; // Menyimpan stream kamera aktif
@@ -601,6 +611,17 @@
                     }
                     renderStickerLabel();
                 });
+            });
+
+            // Event listener untuk Sliders Kontras & Brightness Baru
+            contrastSlider.addEventListener('input', (e) => {
+                contrastVal.innerText = `${e.target.value}x`;
+                renderStickerLabel();
+            });
+
+            brightnessSlider.addEventListener('input', (e) => {
+                brightnessVal.innerText = `${e.target.value}x`;
+                renderStickerLabel();
             });
 
             // Tombol Cetak
@@ -850,8 +871,10 @@
                 offCanvas.height = imgInnerHeight;
                 const offCtx = offCanvas.getContext('2d');
 
-                // Terapkan penyesuaian kontras (1.5x) & kecerahan (1.05x)
-                offCtx.filter = `contrast(1.5) brightness(1.05) grayscale(100%)`;
+                // MENGGUNAKAN NILAI DINAMIS DARI SLIDER UNTUK CONTRAST & BRIGHTNESS
+                const currentContrast = contrastSlider.value;
+                const currentBrightness = brightnessSlider.value;
+                offCtx.filter = `contrast(${currentContrast}) brightness(${currentBrightness}) grayscale(100%)`;
 
                 // LOGIK AUTO-CROP ("Object-Fit: Cover")
                 const imgRatio = userPhoto.width / userPhoto.height;
