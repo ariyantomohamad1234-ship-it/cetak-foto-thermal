@@ -158,7 +158,7 @@
                     </div>
                     <div>
                         <label class="block text-xs font-semibold text-slate-600 mb-1.5">Nama Pelanggan</label>
-                        <input type="text" id="custName" value="Kak Ariyanto" class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all placeholder-slate-400 font-bold text-slate-950">
+                        <input type="text" id="custName" value="Kak Ziddan" class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all placeholder-slate-400 font-bold text-slate-950">
                     </div>
                     <div>
                         <label class="block text-xs font-semibold text-slate-600 mb-1.5">Nama Minuman</label>
@@ -268,6 +268,38 @@
                                 <span class="text-[10px] text-slate-400 font-semibold">LEMBUT</span>
                                 <input type="range" id="contrastSlider" min="0.5" max="4.0" step="0.1" value="1.6" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
                                 <span class="text-[10px] text-slate-400 font-semibold">TAJAM</span>
+                            </div>
+                        </div>
+
+                        <!-- KONTROL MANUAL AMBANG BATAS (THRESHOLD) -->
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center text-xs font-bold text-slate-700">
+                                <label for="thresholdSlider">🎛️ Ambang Batas (Porsi Gelap/Terang)</label>
+                                <div class="flex items-center gap-1">
+                                    <input type="number" id="thresholdInput" min="50" max="200" step="1" value="128" class="w-16 text-center border border-slate-200 rounded-md py-0.5 px-1 focus:outline-none focus:ring-1 focus:ring-indigo-500 font-bold text-slate-800">
+                                    <span class="text-slate-400">pt</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="text-[10px] text-slate-400 font-semibold">BANYAK PUTIH</span>
+                                <input type="range" id="thresholdSlider" min="50" max="200" step="1" value="128" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
+                                <span class="text-[10px] text-slate-400 font-semibold">BANYAK HITAM</span>
+                            </div>
+                        </div>
+
+                        <!-- KONTROL MANUAL KEHALUSAN TEPI (SMOOTHING / NO-NOISE) -->
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center text-xs font-bold text-slate-700">
+                                <label for="smoothSlider">✨ Kehalusan Tepi (Anti-Bintik)</label>
+                                <div class="flex items-center gap-1">
+                                    <input type="number" id="smoothInput" min="0" max="4" step="1" value="1" class="w-16 text-center border border-slate-200 rounded-md py-0.5 px-1 focus:outline-none focus:ring-1 focus:ring-indigo-500 font-bold text-slate-800">
+                                    <span class="text-slate-400">px</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="text-[10px] text-slate-400 font-semibold">ASLI</span>
+                                <input type="range" id="smoothSlider" min="0" max="4" step="1" value="1" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
+                                <span class="text-[10px] text-slate-400 font-semibold">BEBAS BINTIK</span>
                             </div>
                         </div>
 
@@ -487,11 +519,15 @@
         const btnCloseCamera = document.getElementById('btnCloseCamera');
         const cameraStatus = document.getElementById('cameraStatus');
 
-        // Elemen Pengatur Kecerahan, Kontras, dan Ketajaman Tepi
+        // Elemen Pengatur Kecerahan, Kontras, Ambang Batas, Kehalusan, dan Ketajaman Tepi
         const brightnessSlider = document.getElementById('brightnessSlider');
         const brightnessInput = document.getElementById('brightnessInput');
         const contrastSlider = document.getElementById('contrastSlider');
         const contrastInput = document.getElementById('contrastInput');
+        const thresholdSlider = document.getElementById('thresholdSlider');
+        const thresholdInput = document.getElementById('thresholdInput');
+        const smoothSlider = document.getElementById('smoothSlider');
+        const smoothInput = document.getElementById('smoothInput');
         const sharpenSlider = document.getElementById('sharpenSlider');
         const sharpenInput = document.getElementById('sharpenInput');
         const btnResetAdjust = document.getElementById('btnResetAdjust');
@@ -536,11 +572,11 @@
             quoteSelect.appendChild(customOption);
         }
 
-        // Load gambar default (Kucing keren)
+        // Load gambar default (Kucing keren / Pasangan default)
         function loadDefaultImage() {
             userPhoto = new Image();
             userPhoto.crossOrigin = "anonymous";
-            userPhoto.src = "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&q=80&w=350";
+            userPhoto.src = "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=350";
             userPhoto.onload = () => {
                 renderStickerLabel();
             };
@@ -722,6 +758,34 @@
                 renderStickerLabel();
             });
 
+            // Ambang Batas (Threshold)
+            thresholdSlider.addEventListener('input', (e) => {
+                thresholdInput.value = e.target.value;
+                renderStickerLabel();
+            });
+            thresholdInput.addEventListener('input', (e) => {
+                let val = parseInt(e.target.value);
+                if (isNaN(val)) val = 128;
+                if (val < 50) val = 50;
+                if (val > 200) val = 200;
+                thresholdSlider.value = val;
+                renderStickerLabel();
+            });
+
+            // Kehalusan (Smoothing / Anti-Bintik)
+            smoothSlider.addEventListener('input', (e) => {
+                smoothInput.value = e.target.value;
+                renderStickerLabel();
+            });
+            smoothInput.addEventListener('input', (e) => {
+                let val = parseInt(e.target.value);
+                if (isNaN(val)) val = 1;
+                if (val < 0) val = 0;
+                if (val > 4) val = 4;
+                smoothSlider.value = val;
+                renderStickerLabel();
+            });
+
             // Ketajaman (Sharpening)
             sharpenSlider.addEventListener('input', (e) => {
                 sharpenInput.value = e.target.value;
@@ -743,6 +807,10 @@
                 brightnessInput.value = "1.25";
                 contrastSlider.value = "1.3";
                 contrastInput.value = "1.3";
+                thresholdSlider.value = "115";
+                thresholdInput.value = "115";
+                smoothSlider.value = "2";
+                smoothInput.value = "2";
                 sharpenSlider.value = "1.5";
                 sharpenInput.value = "1.5";
                 renderStickerLabel();
@@ -754,6 +822,10 @@
                 brightnessInput.value = "1.00";
                 contrastSlider.value = "1.8";
                 contrastInput.value = "1.8";
+                thresholdSlider.value = "128";
+                thresholdInput.value = "128";
+                smoothSlider.value = "1";
+                smoothInput.value = "1";
                 sharpenSlider.value = "2.5";
                 sharpenInput.value = "2.5";
                 renderStickerLabel();
@@ -765,6 +837,10 @@
                 brightnessInput.value = "0.90";
                 contrastSlider.value = "2.8";
                 contrastInput.value = "2.8";
+                thresholdSlider.value = "140";
+                thresholdInput.value = "140";
+                smoothSlider.value = "0";
+                smoothInput.value = "0";
                 sharpenSlider.value = "3.5";
                 sharpenInput.value = "3.5";
                 renderStickerLabel();
@@ -776,6 +852,10 @@
                 brightnessInput.value = "1.05";
                 contrastSlider.value = "1.6";
                 contrastInput.value = "1.6";
+                thresholdSlider.value = "128";
+                thresholdInput.value = "128";
+                smoothSlider.value = "1";
+                smoothInput.value = "1";
                 sharpenSlider.value = "1.8";
                 sharpenInput.value = "1.8";
                 renderStickerLabel();
@@ -878,6 +958,52 @@
                     dst[dstOff + 1] = Math.min(255, Math.max(0, g));
                     dst[dstOff + 2] = Math.min(255, Math.max(0, b));
                     dst[dstOff + 3] = src[dstOff + 3]; // Alpha tetap utuh
+                }
+            }
+            return output;
+        }
+
+        // =========================================================
+        // FILTER KEHALUSAN / NOISE REDUCTION (BOX BLUR FILTER)
+        // Berfungsi membuang bintik piksel liar agar siluet tampak mulus
+        // =========================================================
+        function applySmoothing(imgData, radius) {
+            if (radius <= 0) return imgData;
+            
+            const sw = imgData.width;
+            const sh = imgData.height;
+            const src = imgData.data;
+            
+            const canvasTemp = document.createElement('canvas');
+            canvasTemp.width = sw;
+            canvasTemp.height = sh;
+            const ctxTemp = canvasTemp.getContext('2d');
+            const output = ctxTemp.createImageData(sw, sh);
+            const dst = output.data;
+
+            for (let y = 0; y < sh; y++) {
+                for (let x = 0; x < sw; x++) {
+                    let rSum = 0, gSum = 0, bSum = 0, count = 0;
+                    
+                    for (let dy = -radius; dy <= radius; dy++) {
+                        for (let dx = -radius; dx <= radius; dx++) {
+                            const nx = x + dx;
+                            const ny = y + dy;
+                            if (nx >= 0 && nx < sw && ny >= 0 && ny < sh) {
+                                const offset = (ny * sw + nx) * 4;
+                                rSum += src[offset];
+                                gSum += src[offset + 1];
+                                bSum += src[offset + 2];
+                                count++;
+                            }
+                        }
+                    }
+                    
+                    const dstOff = (y * sw + x) * 4;
+                    dst[dstOff]     = rSum / count;
+                    dst[dstOff + 1] = gSum / count;
+                    dst[dstOff + 2] = bSum / count;
+                    dst[dstOff + 3] = src[dstOff + 3];
                 }
             }
             return output;
@@ -1044,6 +1170,8 @@
                 const currentContrast = parseFloat(contrastSlider.value);
                 const currentBrightness = parseFloat(brightnessSlider.value);
                 const currentSharpen = parseFloat(sharpenSlider.value);
+                const currentSmooth = parseInt(smoothSlider.value);
+                const currentThreshold = parseInt(thresholdSlider.value);
 
                 // Terapkan penyesuaian kecerahan dan kontras di tingkat filter browser
                 offCtx.filter = `contrast(${currentContrast}) brightness(${currentBrightness}) grayscale(100%)`;
@@ -1068,8 +1196,11 @@
                 // 1. Terapkan Filter Penajaman HD Matriks Konvolusi
                 imgData = sharpenImageData(imgData, currentSharpen); 
 
-                // 2. Terapkan Binarisasi Solid Hitam-Putih Murni (BENAR-BENAR TANPA BINTIK!)
-                applyThresholdBinarize(imgData);
+                // 2. Terapkan Smoothing Filter (Anti-Bintik) sebelum binarisasi
+                imgData = applySmoothing(imgData, currentSmooth);
+
+                // 3. Terapkan Binarisasi Solid Hitam-Putih Murni (BENAR-BENAR TANPA BINTIK!)
+                applyThresholdBinarize(imgData, currentThreshold);
 
                 offCtx.putImageData(imgData, 0, 0);
                 ctx.drawImage(offCanvas, imgX, imgY);
@@ -1139,13 +1270,13 @@
         // ALGORITMA RENDERING: THRESHOLD BINARIZE (HITAM PUTIH SOLID MURNI)
         // BENAR-BENAR TANPA BINTIK-BINTIK. Mulus, tegas, kontras, dan solid.
         // ========================================================
-        function applyThresholdBinarize(imgData) {
+        function applyThresholdBinarize(imgData, cutoff) {
             const data = imgData.data;
             for (let i = 0; i < data.length; i += 4) {
                 // Menghitung luma skala abu-abu
                 const gray = 0.299 * data[i] + 0.587 * data[i+1] + 0.114 * data[i+2];
-                // Pembagian ambang batas (threshold): di bawah 128 menjadi hitam pekat (0), di atasnya putih murni (255)
-                const val = gray < 128 ? 0 : 255;
+                // Pembagian ambang batas (threshold): di bawah 'cutoff' menjadi hitam pekat, di atasnya putih murni
+                const val = gray < cutoff ? 0 : 255;
                 data[i] = data[i+1] = data[i+2] = val;
                 data[i+3] = 255;
             }
@@ -1176,3 +1307,4 @@
     </script>
 </body>
 </html>
+```
