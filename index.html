@@ -74,7 +74,7 @@
             
             <div class="flex items-center gap-2">
                 <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 shadow-sm border border-emerald-200">
-                    ✨ Ultra HD Thermal Mode Active
+                    ✨ Ultra HD Pure Black-and-White Mode Active
                 </span>
             </div>
         </div>
@@ -287,13 +287,13 @@
                             </div>
                         </div>
 
-                        <!-- KONTROL METODE ALGORITMA DITHERING -->
+                        <!-- KONTROL METODE ALGORITMA RENDERING GAMBAR (Threshold dipilih default!) -->
                         <div class="space-y-2">
                             <label for="ditherModeSelect" class="block text-xs font-bold text-slate-700">🏁 Algoritma Gambar Thermal</label>
                             <select id="ditherModeSelect" class="w-full border border-slate-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all font-bold bg-slate-50">
-                                <option value="floyd">Detail HD (Floyd-Steinberg) - Cocok Wajah / Orang</option>
-                                <option value="atkinson">Retro Dot (Atkinson) - Sangat Artistik</option>
-                                <option value="threshold">Hitam Putih Pekat (Threshold) - Cocok Tulisan / Logo</option>
+                                <option value="threshold" selected>Hitam Putih Pekat (Threshold) - Tanpa Bintik-Bintik (Sangat Tajam)</option>
+                                <option value="floyd">Detail Bintik HD (Floyd-Steinberg) - Gradasi Lembut</option>
+                                <option value="atkinson">Retro Dot (Atkinson) - Bintik Seni Klasik</option>
                             </select>
                         </div>
                     </div>
@@ -748,47 +748,47 @@
                 renderStickerLabel();
             });
 
-            // Mode Algoritma Dithering
+            // Mode Algoritma Dithering / Thresholding
             ditherModeSelect.addEventListener('change', renderStickerLabel);
 
             // -- LOGIK PRESET CETAK CEPAT --
             presetSelfie.addEventListener('click', () => {
-                // Preset Optimal untuk wajah orang
+                // Preset Optimal untuk wajah orang (menggunakan Floyd bintik halus agar detail wajah terlihat)
                 brightnessSlider.value = "1.15";
                 brightnessInput.value = "1.15";
                 contrastSlider.value = "1.4";
                 contrastInput.value = "1.4";
                 sharpenSlider.value = "2.0";
                 sharpenInput.value = "2.0";
-                ditherModeSelect.value = "floyd"; // Floyd-Steinberg is superior for faces
+                ditherModeSelect.value = "floyd"; 
                 renderStickerLabel();
             });
 
             presetObject.addEventListener('click', () => {
-                // Preset seimbang untuk benda / makanan / gelas
+                // Preset seimbang untuk benda / makanan / gelas (Atkinson dot)
                 brightnessSlider.value = "1.00";
                 brightnessInput.value = "1.00";
                 contrastSlider.value = "1.8";
                 contrastInput.value = "1.8";
                 sharpenSlider.value = "2.5";
                 sharpenInput.value = "2.5";
-                ditherModeSelect.value = "atkinson"; // Atkinson gives a strong aesthetic dot contrast
+                ditherModeSelect.value = "atkinson"; 
                 renderStickerLabel();
             });
 
             presetTextLogo.addEventListener('click', () => {
-                // Preset kontras tinggi untuk logo / tulisan
+                // Preset kontras tinggi untuk logo / tulisan (Threshold solid hitam-putih)
                 brightnessSlider.value = "0.95";
                 brightnessInput.value = "0.95";
                 contrastSlider.value = "2.8";
                 contrastInput.value = "2.8";
                 sharpenSlider.value = "3.5";
                 sharpenInput.value = "3.5";
-                ditherModeSelect.value = "threshold"; // Pure black and white threshold
+                ditherModeSelect.value = "threshold"; 
                 renderStickerLabel();
             });
 
-            // Tombol Reset Penyesuaian
+            // Tombol Reset Penyesuaian (Membawa kembali ke threshold hitam-putih pekat)
             btnResetAdjust.addEventListener('click', () => {
                 brightnessSlider.value = "1.05";
                 brightnessInput.value = "1.05";
@@ -796,7 +796,7 @@
                 contrastInput.value = "1.6";
                 sharpenSlider.value = "1.8";
                 sharpenInput.value = "1.8";
-                ditherModeSelect.value = "floyd";
+                ditherModeSelect.value = "threshold";
                 renderStickerLabel();
             });
 
@@ -863,9 +863,6 @@
             const dst = output.data;
 
             // Matrix convolution sharpen dinamis:
-            // [  0,   -a,    0 ]
-            // [ -a,  1+4a,  -a ]
-            // [  0,   -a,    0 ]
             const a = amount * 0.8; 
             const center = 1 + (4 * a);
             const edge = -a;
@@ -969,7 +966,7 @@
         }
 
         // =========================================================
-        // FUNGSI UTAMA: Menggambar Seluruh Stiker di Canvas (Teks Tebal + Dithering)
+        // FUNGSI UTAMA: Menggambar Seluruh Stiker di Canvas (Teks Tebal & Binarisasi Solid)
         // =========================================================
         function renderStickerLabel() {
             let activeWidth = 58;
@@ -1091,7 +1088,7 @@
                 // 1. Terapkan Filter Penajaman HD Matriks Konvolusi
                 imgData = sharpenImageData(imgData, currentSharpen); 
 
-                // 2. Terapkan Dithering sesuai pilihan Algoritma
+                // 2. Terapkan Dithering / Thresholding sesuai pilihan Algoritma (Threshold terpilih default)
                 if (currentDitherMode === "floyd") {
                     applyFloydSteinbergDither(imgData);
                 } else if (currentDitherMode === "atkinson") {
@@ -1133,13 +1130,13 @@
             // ====================================================================
             ctx.textAlign = 'left';
             
-            // Nama Produk / Minuman (Diperbesar dari 22px menjadi 24px dan Sangat Tebal)
+            // Nama Produk / Minuman (Diperbesar & Sangat Tebal)
             ctx.fillStyle = '#000000';
-            ctx.font = "bold 24px 'Courier Prime', Courier, monospace";
+            ctx.font = "bold 26px 'Courier Prime', Courier, monospace";
             ctx.fillText(drinkName.value.toUpperCase(), contentX, textYStart);
 
-            // Kustomisasi/Catatan Resep Minuman (Diperbesar dari 14px menjadi 16px, Kapital & Sangat Tebal)
-            ctx.font = "bold 16px 'Courier Prime', Courier, monospace";
+            // Kustomisasi/Catatan Resep Minuman (Kapital & Sangat Tebal)
+            ctx.font = "bold 18px 'Courier Prime', Courier, monospace";
             ctx.fillText("RECIPE: " + drinkNote.value.toUpperCase(), contentX, textYStart + 28);
 
             // ====================================================================
@@ -1148,15 +1145,15 @@
             const barcodeWidth = baseContentWidth - 40;
             const barcodeX = (targetWidth - barcodeWidth) / 2;
             
-            // Gambar Barcode di tengah-tengah (Tinggi barcode dipertebal sedikit dari 20 ke 22)
+            // Gambar Barcode di tengah-tengah 
             drawAestheticBarcode(ctx, barcodeX, barcodeYStart, barcodeWidth, 22);
 
-            // Footer Terima Kasih (Kapital, Diperbesar dari 13px menjadi 15px dan Ultra Tebal)
+            // Footer Terima Kasih (Kapital, Diperbesar & Ultra Tebal)
             ctx.textAlign = 'center';
             ctx.font = "bold italic 15px 'Courier Prime', Courier, monospace";
             ctx.fillText("TERIMA KASIH ATAS KUNJUNGAN ANDA!", targetWidth / 2, barcodeYStart + 48);
             
-            // Keterangan Cara Tempel (Kapital, Diperbesar dari 11px menjadi 12px dan Ultra Tebal)
+            // Keterangan Cara Tempel (Kapital, Diperbesar & Ultra Tebal)
             ctx.font = "bold 12px 'Courier Prime', Courier, monospace";
             ctx.fillText("HARAP TEMPELKAN STIKER INI DI PERMUKAAN GELAS KERING", targetWidth / 2, barcodeYStart + 66);
 
@@ -1187,9 +1184,6 @@
 
                     grayBuf[idx] = newGray;
 
-                    // Distribusi error Floyd-Steinberg:
-                    //       *   7/16
-                    // 3/16 5/16 1/16
                     distributeError(grayBuf, x + 1, y,     w, h, error * (7 / 16));
                     distributeError(grayBuf, x - 1, y + 1, w, h, error * (3 / 16));
                     distributeError(grayBuf, x,     y + 1, w, h, error * (5 / 16));
@@ -1228,7 +1222,6 @@
 
                     grayBuf[idx] = newGray;
 
-                    // Distribusi error Atkinson (membagi ke 6 tetangga sebesar 1/8)
                     const e = error / 8;
                     distributeError(grayBuf, x + 1, y,     w, h, e);
                     distributeError(grayBuf, x + 2, y,     w, h, e);
@@ -1248,13 +1241,15 @@
         }
 
         // ========================================================
-        // ALGORITMA DITHERING 3: THRESHOLD BINARIZE (HITAM PUTIH TEGAS)
-        // Cocok untuk logo, teks murni tanpa abu-abu
+        // ALGORITMA RENDERING 3: THRESHOLD BINARIZE (HITAM PUTIH SOLID)
+        // Sangat mulus, tegas, kontras, dan tanpa bintik-bintik
         // ========================================================
         function applyThresholdBinarize(imgData) {
             const data = imgData.data;
             for (let i = 0; i < data.length; i += 4) {
+                // Menghitung luma skala abu-abu
                 const gray = 0.299 * data[i] + 0.587 * data[i+1] + 0.114 * data[i+2];
+                // Pembagian ambang batas (threshold): di bawah 128 menjadi hitam pekat (0), di atasnya putih murni (255)
                 const val = gray < 128 ? 0 : 255;
                 data[i] = data[i+1] = data[i+2] = val;
                 data[i+3] = 255;
